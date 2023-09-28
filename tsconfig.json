@@ -12,7 +12,7 @@
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
@@ -22,7 +22,7 @@
         "name": "next"
       }
     ],
-    "baseUrl": "./src",
+    "baseUrl": "./src/",
     "paths": {
       "@components/*": [
         "components/*"
@@ -44,8 +44,12 @@
       ],
       "@utils/*": [
         "utils/*"
+      ],
+      "@validators/*": [
+        "validators/*"
       ]
-    }
+    },
+    "forceConsistentCasingInFileNames": true
   },
   "include": [
     "next-env.d.ts",
