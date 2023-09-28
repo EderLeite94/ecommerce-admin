@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import type { NextPage } from 'next';
 import NextImage from 'next/image';
 import NextLink from 'next/link';
 
@@ -17,7 +18,7 @@ import { formatCNPJ } from '@utils/formatters';
 
 import { signInDefaultValues, schema, type ISignIn } from './utils';
 
-const Home = () => {
+const Home: NextPage = () => {
   const [isVisiblePassword, setIsVisiblePassword] = useState(false);
 
   const { control, handleSubmit, setValue } = useForm<ISignIn>({
@@ -80,7 +81,7 @@ const Home = () => {
         </Button>
       </form>
       <Link
-        href="#"
+        href="/recovery-password"
         as={NextLink}
         size="sm"
         underline="always"
