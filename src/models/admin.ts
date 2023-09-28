@@ -3,6 +3,7 @@ import { IAddress } from '@models/index';
 export interface IAdmin {
   id: string;
   company: {
+    email: string;
     cnpj: string;
     corporateReason: string;
     fantasyName: string;

@@ -1,8 +1,17 @@
 import { z } from 'zod';
 
+export const email = z
+  .string()
+  .email({
+    message: 'Formato inválido!'
+  })
+  .nonempty('O e-mail é obrigatório!')
+  .trim();
+
 export const cnpj = z
   .string()
   .nonempty('O CNPJ é obrigatório!')
+  .min(18, 'O CNPJ deve ter 14 caracteres!')
   .trim();
 
 export const password = z
