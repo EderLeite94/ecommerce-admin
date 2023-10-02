@@ -32,6 +32,7 @@ export const Field: FC<FieldProps> = ({
             {...props}
             variant={variant}
             errorMessage={error && <ErrorMessage errorMessage={error.message as string} />}
+            className='text-zinc-900'
           />
         )
       }
