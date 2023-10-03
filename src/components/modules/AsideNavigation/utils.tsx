@@ -26,7 +26,7 @@ export const accordionItems: AccordionItems[] = [
       },
       {
         icon: <Lock className='w-4' />,
-        label: 'Trocar senha',
+        label: 'Alterar senha',
         path: '/account/change-password'
       }
     ]

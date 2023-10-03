@@ -49,3 +49,15 @@ export const password = z
   .nonempty('A senha é obrigatória!')
   .min(8, 'A senha deve ter no mínimo 8 caracteres!')
   .trim();
+
+export const newPassword = z
+  .string()
+  .nonempty('A nova senha é obrigatória!')
+  .min(8, 'A nova senha deve ter no mínimo 8 caracteres!')
+  .trim();
+
+export const confirmNewPassword = z
+  .string()
+  .nonempty('A confirmação da nova senha é obrigatória!')
+  .min(8, 'A nova senha deve ter no mínimo 8 caracteres!')
+  .trim();

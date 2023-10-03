@@ -2,17 +2,19 @@
 
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
-import NextLink from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button, ButtonGroup } from '@nextui-org/react';
 
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-import { Field } from '@components/elements';
+import { Field, SubmitButton } from '@components/elements';
 
 import { recoveryPasswordDefaultValues, schema, type IRecoveryPassword } from './utils';
 
 const RecoveryPassword: NextPage = () => {
+  const { back } = useRouter();
+
   const { control, handleSubmit } = useForm<IRecoveryPassword>({
     mode: 'onChange',
     defaultValues: recoveryPasswordDefaultValues,
@@ -22,7 +24,6 @@ const RecoveryPassword: NextPage = () => {
   const onSubmit: SubmitHandler<IRecoveryPassword> = (recoveryPasswordValues) => {
     console.log(recoveryPasswordValues);
   };
-
   return (
     <div className='bg-zinc-900 flex flex-col items-center min-h-screen h-full p-10'>
       <NextImage
@@ -51,20 +52,16 @@ const RecoveryPassword: NextPage = () => {
         />
         <ButtonGroup className='gap-2 mt-8'>
           <Button
-            href='/'
-            as={NextLink}
             color="primary"
             className='uppercase font-semibold py-unit-lg w-32'
+            onClick={back}
           >
             Voltar
           </Button>
-          <Button
-            type='submit'
-            color="primary"
-            className='uppercase font-semibold py-unit-lg w-32'
-          >
-            Enviar
-          </Button>
+          <SubmitButton
+            title='Enviar'
+            className='mt-0 w-32'
+          />
         </ButtonGroup>
       </form>
     </div>
