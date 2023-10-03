@@ -3,15 +3,16 @@ import type { FC } from 'react';
 
 import { Controller, type Control } from 'react-hook-form';
 
-import { Input, type InputProps } from '@nextui-org/react';
+import { Select, type SelectProps } from '@nextui-org/react';
 
 import { ErrorMessage } from '@components/elements';
 
-interface FieldProps extends InputProps {
+interface SelectFieldProps extends SelectProps {
   control: Control<any, any>;
 }
 
-export const Field: FC<FieldProps> = ({
+export const SelectField: FC<SelectFieldProps> = ({
+  children,
   control,
   name,
   variant,
@@ -27,13 +28,15 @@ export const Field: FC<FieldProps> = ({
           field: { ...fields },
           fieldState: { error }
         }) => (
-          <Input
+          <Select
             {...fields}
             {...props}
             variant={variant}
             errorMessage={error && <ErrorMessage errorMessage={error.message as string} />}
             className='text-zinc-900'
-          />
+          >
+            {children}
+          </Select>
         )
       }
     />

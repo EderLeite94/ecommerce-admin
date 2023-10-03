@@ -1,6 +1,6 @@
 import type { Metadata, NextPage } from 'next';
 
-import { AsideNavigation } from '@components/modules';
+import { AsideLayout } from '@components/layout';
 
 export const metadata: Metadata = {
   title: 'Sync Admin | Dashboard'
@@ -8,9 +8,8 @@ export const metadata: Metadata = {
 
 const Dashboard: NextPage = () => {
   return (
-    <div className='bg-zinc-50 min-h-screen h-full box-content'>
-      <AsideNavigation />
-    </div>
+    <AsideLayout>
+    </AsideLayout>
   );
 };
 

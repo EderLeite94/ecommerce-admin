@@ -7,13 +7,17 @@ import NextLink from 'next/link';
 
 import { Accordion, AccordionItem, Tooltip } from '@nextui-org/react';
 
+import { cn } from '@utils/cn';
+
 import { accordionItems, linkItems } from './utils';
 
 export const AsideNavigation: FC = () => {
   const [isOpenAsideNavigation, setIsOpenAsideNavigation] = useState(true);
 
   return (
-    <nav className={`bg-zinc-900 rounded-r-3xl ${isOpenAsideNavigation ? 'w-60' : 'w-24'} h-screen p-4 transition-width`}>
+    <nav className={
+      cn('bg-zinc-900 rounded-r-3xl h-screen p-4 transition-width sticky top-0', isOpenAsideNavigation ? 'w-60' : 'w-24')
+    }>
       <figure className='flex items-end gap-2 mb-5'>
         <NextImage
           src='/medias/logo-white.svg'
