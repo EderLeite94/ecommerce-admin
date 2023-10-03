@@ -4,15 +4,14 @@ import { useState } from 'react';
 
 import type { NextPage } from 'next';
 import NextImage from 'next/image';
-import NextLink from 'next/link';
 
-import { Button, Link } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { Eye, EyeOff } from 'react-feather';
 
-import { Field } from '@components/elements';
+import { Field, ForgotPassword } from '@components/elements';
 
 import { formatCNPJ } from '@utils/formatters';
 
@@ -80,15 +79,7 @@ const Home: NextPage = () => {
           Entrar
         </Button>
       </form>
-      <Link
-        href="/recovery-password"
-        as={NextLink}
-        size="sm"
-        underline="always"
-        className='mt-4'
-      >
-        Esqueci minha senha
-      </Link>
+      <ForgotPassword />
     </div>
   );
 };

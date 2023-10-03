@@ -4,12 +4,14 @@ import type { NextPage } from 'next';
 
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-import { Button, SelectItem } from '@nextui-org/react';
+import { SelectItem } from '@nextui-org/react';
+
+import { UploadCloud } from 'react-feather';
 
 import { states } from '@mocks/index';
 
 import { AsideLayout, HalfToHalf } from '@components/layout';
-import { Field, Fieldset, SelectField } from '@components/elements';
+import { Field, Fieldset, SelectField, SubmitButton, Title } from '@components/elements';
 
 import { formatCNPJ, formatCPF } from '@utils/formatters';
 
@@ -28,6 +30,10 @@ const AccountUpdate: NextPage = () => {
 
   return (
     <AsideLayout>
+      <Title
+        icon={<UploadCloud />}
+        title='Atualizar dados'
+      />
       <form
         className='flex flex-col gap-4'
         onSubmit={handleSubmit(onSubmit)}
@@ -136,13 +142,7 @@ const AccountUpdate: NextPage = () => {
             ))}
           </SelectField>
         </HalfToHalf>
-        <Button
-          type='submit'
-          color="primary"
-          className='uppercase font-semibold mx-auto mt-4 py-unit-lg w-60'
-        >
-          Atualizar
-        </Button>
+        <SubmitButton title='Atualizar' />
       </form>
     </AsideLayout>
   );
