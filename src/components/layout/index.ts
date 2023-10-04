@@ -1,2 +1,2 @@
 export * from './AsideLayout';
-export * from './HalfToHalf';
+export * from './GridLayout';
