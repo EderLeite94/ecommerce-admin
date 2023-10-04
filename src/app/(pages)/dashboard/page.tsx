@@ -1,14 +1,19 @@
-import type { Metadata, NextPage } from 'next';
+'use client';
+
+import type { NextPage } from 'next';
+
+import { Command } from 'react-feather';
 
 import { AsideLayout } from '@components/layout';
-
-export const metadata: Metadata = {
-  title: 'Sync Admin | Dashboard'
-};
+import { Title } from '@components/elements';
 
 const Dashboard: NextPage = () => {
   return (
     <AsideLayout>
+      <Title
+        icon={<Command />}
+        title='Dashboard'
+      />
     </AsideLayout>
   );
 };

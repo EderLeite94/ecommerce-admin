@@ -10,7 +10,7 @@ import { UploadCloud } from 'react-feather';
 
 import { states } from '@mocks/index';
 
-import { AsideLayout, HalfToHalf } from '@components/layout';
+import { AsideLayout, GridLayout } from '@components/layout';
 import { Field, Fieldset, SelectField, SubmitButton, Title } from '@components/elements';
 
 import { formatCNPJ, formatCPF } from '@utils/formatters';
@@ -46,7 +46,7 @@ const AccountUpdate: NextPage = () => {
             control={control}
             onChange={({ target: { value } }) => setValue('cnpj', formatCNPJ(value))}
           />
-          <HalfToHalf>
+          <GridLayout>
             <Field
               variant='faded'
               label='Razão social'
@@ -59,7 +59,7 @@ const AccountUpdate: NextPage = () => {
               name='fantasyName'
               control={control}
             />
-          </HalfToHalf>
+          </GridLayout>
           <Field
             variant='faded'
             label='E-mail'
@@ -68,7 +68,7 @@ const AccountUpdate: NextPage = () => {
           />
         </Fieldset>
         <Fieldset legend='Proprietário(a):'>
-          <HalfToHalf>
+          <GridLayout>
             <Field
               variant='faded'
               label='Nome'
@@ -81,7 +81,7 @@ const AccountUpdate: NextPage = () => {
               name='surname'
               control={control}
             />
-          </HalfToHalf>
+          </GridLayout>
           <Field
             variant='faded'
             label='CPF'
@@ -103,7 +103,7 @@ const AccountUpdate: NextPage = () => {
             name='street'
             control={control}
           />
-          <HalfToHalf>
+          <GridLayout>
             <Field
               variant='faded'
               label='Bairro'
@@ -116,9 +116,9 @@ const AccountUpdate: NextPage = () => {
               name='number'
               control={control}
             />
-          </HalfToHalf>
+          </GridLayout>
         </Fieldset>
-        <HalfToHalf>
+        <GridLayout>
           <Field
             variant='faded'
             label='Cidade'
@@ -141,7 +141,7 @@ const AccountUpdate: NextPage = () => {
               </SelectItem>
             ))}
           </SelectField>
-        </HalfToHalf>
+        </GridLayout>
         <SubmitButton title='Atualizar' />
       </form>
     </AsideLayout>
