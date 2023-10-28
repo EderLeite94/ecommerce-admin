@@ -7,7 +7,10 @@ import Providers from '@styles/providers';
 import '@styles/global.css';
 
 export const metadata: Metadata = {
-  title: 'Sync Admin'
+  title: {
+    default: 'Sync',
+    template: 'Sync | %s'
+  }
 };
 
 export const poppins = Poppins({

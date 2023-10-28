@@ -13,7 +13,7 @@ import { Field, SubmitButton, TextareaField, Title } from '@components/elements'
 
 import { couponDefaultValues, schema } from './utils';
 
-const Coupons: NextPage = () => {
+const CouponsCreate: NextPage = () => {
   const { control, handleSubmit } = useForm<ICoupon>({
     mode: 'onChange',
     defaultValues: couponDefaultValues,
@@ -79,4 +79,4 @@ const Coupons: NextPage = () => {
   );
 };
 
-export default Coupons;
+export default CouponsCreate;

@@ -43,7 +43,7 @@ export const accordionItems: AccordionItems[] = [
       {
         icon: <PlusCircle className='w-4' />,
         label: 'Criar',
-        path: '/coupons/add'
+        path: '/coupons/create'
       }
     ]
   },
@@ -59,7 +59,7 @@ export const accordionItems: AccordionItems[] = [
       {
         icon: <PlusCircle className='w-4' />,
         label: 'Criar',
-        path: '/products/add'
+        path: '/products/create'
       }
     ]
   }
