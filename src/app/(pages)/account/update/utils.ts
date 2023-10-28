@@ -2,28 +2,26 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { z } from 'zod';
 
-import type { IAddress, IAdmin } from '@models/index';
-
 import { cnpj, corporateReason, fantasyName, email, name, surname, cpf } from '@validators/admin';
 import * as addressValidators from '@validators/address';
 
-export interface ICompany {
-  cnpj: IAdmin['company']['cnpj'];
-  corporateReason: IAdmin['company']['corporateReason'];
-  fantasyName: IAdmin['company']['fantasyName'];
-  email: IAdmin['company']['email'];
-  name: IAdmin['owner']['name'];
-  surname: IAdmin['owner']['surname'];
-  cpf: IAdmin['owner']['cpf'];
-  cep: IAddress['cep'];
-  street: IAddress['street'];
-  district: IAddress['district'];
-  number: IAddress['number'];
-  city: IAddress['city'];
-  state: IAddress['state'];
-}
+export type TCompany = z.infer<typeof schema>;
 
-export const companyDefaultValues: ICompany = {
+export const schema = z
+  .object({
+    cnpj,
+    corporateReason,
+    fantasyName,
+    email,
+    name,
+    surname,
+    cpf,
+    ...addressValidators
+  });
+
+export const schemaResolver = zodResolver(schema);
+
+export const companyDefaultValues: TCompany = {
   cnpj: '',
   corporateReason: '',
   fantasyName: '',
@@ -38,16 +36,3 @@ export const companyDefaultValues: ICompany = {
   city: '',
   state: ''
 };
-
-export const schema = zodResolver(
-  z.object({
-    cnpj,
-    corporateReason,
-    fantasyName,
-    email,
-    name,
-    surname,
-    cpf,
-    ...addressValidators
-  })
-);

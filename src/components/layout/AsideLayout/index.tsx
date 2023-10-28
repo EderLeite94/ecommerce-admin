@@ -10,7 +10,7 @@ interface AsideLayoutProps extends PropsWithChildren {
 
 export const AsideLayout: FC<AsideLayoutProps> = ({ children, className }) => {
   return (
-    <div className='bg-zinc-50 flex min-h-screen box-content'>
+    <div className='bg-zinc-50 flex'>
       <AsideNavigation />
       <main className={cn('mx-auto w-full max-w-5xl p-4', className)}>
         {children}

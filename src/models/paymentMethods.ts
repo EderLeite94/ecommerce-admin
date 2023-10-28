@@ -1,0 +1,1 @@
+export type TPaymentMethods = 'pix' | 'credito' | 'debito' | 'boleto'
