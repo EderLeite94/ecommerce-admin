@@ -1,17 +1,20 @@
+'use client';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { FC } from 'react';
 
 import { Controller, type Control } from 'react-hook-form';
 
-import { Textarea, type TextAreaProps } from '@nextui-org/react';
+import { Select, type SelectProps } from '@nextui-org/react';
 
 import { ErrorMessage } from '@components/elements';
 
-interface TextAreaFieldProps extends TextAreaProps {
+interface SelectFieldProps extends SelectProps {
   control: Control<any, any>;
 }
 
-export const TextareaField: FC<TextAreaFieldProps> = ({
+export const SelectField: FC<SelectFieldProps> = ({
+  children,
   control,
   name,
   variant,
@@ -27,13 +30,15 @@ export const TextareaField: FC<TextAreaFieldProps> = ({
           field: { ...fields },
           fieldState: { error }
         }) => (
-          <Textarea
+          <Select
             {...fields}
             {...props}
             variant={variant}
             errorMessage={error && <ErrorMessage errorMessage={error.message as string} />}
             className='text-zinc-900'
-          />
+          >
+            {children}
+          </Select>
         )
       }
     />

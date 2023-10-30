@@ -25,7 +25,10 @@
     "baseUrl": "./src/",
     "paths": {
       "@components/*": [
-        "components/*"
+        "app/components/*"
+      ],
+      "@constants/*": [
+        "constants/*"
       ],
       "@mocks/*": [
         "mocks/*"

@@ -2,8 +2,6 @@ import type { FC } from 'react';
 
 import NextLink from 'next/link';
 
-import { Link } from '@nextui-org/react';
-
 import { cn } from '@utils/cn';
 
 interface ForgotPasswordProps {
@@ -12,14 +10,11 @@ interface ForgotPasswordProps {
 
 export const ForgotPassword: FC<ForgotPasswordProps> = ({ className }) => {
   return (
-    <Link
+    <NextLink
       href='/recovery-password'
-      as={NextLink}
-      size='sm'
-      underline='always'
-      className={cn('mt-4', className)}
+      className={cn('text-sm underline mt-4', className)}
     >
       Esqueci minha senha
-    </Link>
+    </NextLink>
   );
 }; 

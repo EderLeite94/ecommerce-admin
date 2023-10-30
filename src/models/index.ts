@@ -3,4 +3,5 @@ export type * from './admin';
 export type * from './coupon';
 export type * from './paymentMethods';
 export type * from './product';
+export type * from './signIn';
 export type * from './user';
