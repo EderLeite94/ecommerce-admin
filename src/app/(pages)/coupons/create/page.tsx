@@ -1,80 +1,25 @@
-'use client';
+import type { Metadata, NextPage } from 'next';
+import { cookies } from 'next/headers';
 
-import type { NextPage } from 'next';
+import type { IUser } from '@models/index';
 
-import { useForm, type SubmitHandler } from 'react-hook-form';
+import { AsideLayout } from '@components/layout';
 
-import { Percent } from 'react-feather';
+import { userKey } from '@constants/cookies';
 
-import { ICoupon } from '@models/index';
+import { Description, Form } from './components';
 
-import { AsideLayout, GridLayout } from '@components/layout';
-import { Field, SubmitButton, TextareaField, Title } from '@components/elements';
-
-import { couponDefaultValues, schema } from './utils';
+export const metadata: Metadata = {
+  title: 'Criar cupom'
+};
 
 const CouponsCreate: NextPage = () => {
-  const { control, handleSubmit } = useForm<ICoupon>({
-    mode: 'onChange',
-    defaultValues: couponDefaultValues,
-    resolver: schema
-  });
-
-  const onSubmit: SubmitHandler<ICoupon> = (changePasswordValues) => {
-    console.log(changePasswordValues);
-  };
+  const user: IUser = JSON.parse(cookies().get(userKey)?.value as string);
 
   return (
     <AsideLayout>
-      <Title
-        icon={<Percent />}
-        title='Criar cupom'
-      />
-      <p className='text-zinc-700 mb-2'>
-        Aqui você tem o controle total para criar e gerenciar os seus cupons que estarão disponíveis aos seus clientes. Esta é a sua ferramenta central para criar ofertas exclusivas, descontos imperdíveis e promoções especiais que vão encantar a clientela.
-      </p>
-      <form
-        className='flex flex-col gap-4'
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Field
-          variant='faded'
-          label='Nome'
-          name='name'
-          control={control}
-        />
-        <TextareaField
-          variant='faded'
-          label='Descrição'
-          name='description'
-          control={control}
-        />
-        <GridLayout cols='3'>
-          <Field
-            variant='faded'
-            label='Código'
-            name='code'
-            control={control}
-          />
-          <Field
-            type='number'
-            variant='faded'
-            label='Desconto (%)'
-            placeholder='%'
-            name='percentageValue'
-            control={control}
-          />
-          <Field
-            type='date'
-            variant='faded'
-            label='Data de validade'
-            placeholder='dd/mm/aaaa'
-            name='expirationDate'
-            control={control}
-          />
-        </GridLayout>
-        <SubmitButton title='Criar' />
-      </form>
+      <Description title={metadata.title as string} />
+      <Form userId={user.id} />
     </AsideLayout>
   );
 };
