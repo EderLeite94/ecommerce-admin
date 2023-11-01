@@ -36,14 +36,34 @@ export const useAuth = () => {
 
       showToast(data.message, response.ok);
 
-      handleRedirectToDashboard();
+      response.ok && handleRedirectToDashboard();
     } finally {
       setIsLoading(false);
     }
   }, [push]);
 
+  const handleUpdatePasswordById = useCallback(async (userId: IUser['id'], updatePasswordValues: {
+    password: string;
+    newPassword: string;
+    checkPassword: string;
+  }) => {
+    try {
+      setIsLoading(true);
+
+      const { response, data } = await useFetch(`${baseURL}/${base}/update-password-by-id/${userId}`,
+        'PATCH',
+        { security: updatePasswordValues }
+      );
+
+      showToast(data.message, response.ok);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
   return {
+    isLoading,
     handleSignIn,
-    isLoading
+    handleUpdatePasswordById
   };
 };
