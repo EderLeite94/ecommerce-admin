@@ -1,11 +1,11 @@
-import type { Metadata, NextPage } from 'next';
+import type { NextPage, Metadata } from 'next';
 import { cookies } from 'next/headers';
 
 import type { IUser } from '@models/index';
 
-import { AsideLayout } from '@components/layout';
-
 import { userKey } from '@constants/cookies';
+
+import { AsideLayout } from '@components/layout';
 
 import { Description, Form } from './components';
 

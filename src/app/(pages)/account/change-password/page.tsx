@@ -1,78 +1,26 @@
-'use client';
+import type { NextPage, Metadata } from 'next';
+import { cookies } from 'next/headers';
 
-import type { NextPage } from 'next';
+import type { IUser } from '@models/index';
 
-import { useForm, type SubmitHandler } from 'react-hook-form';
-
-import { Lock } from 'react-feather';
+import { userKey } from '@constants/cookies';
 
 import { AsideLayout } from '@components/layout';
-import { Field, ForgotPassword, SubmitButton, Title } from '@components/elements';
 
-import { passwordTips, changePasswordDefaultValues, schema, type IChangePassword } from './utils';
+import { Description, Form } from './components';
+
+export const metadata: Metadata = {
+  title: 'Alterar senha'
+};
 
 const AccountChangePassword: NextPage = () => {
-  const { control, handleSubmit } = useForm<IChangePassword>({
-    mode: 'onChange',
-    defaultValues: changePasswordDefaultValues,
-    resolver: schema
-  });
-
-  const onSubmit: SubmitHandler<IChangePassword> = (changePasswordValues) => {
-    console.log(changePasswordValues);
-  };
+  const user: IUser = JSON.parse(cookies().get(userKey)?.value as string);
 
   return (
     <AsideLayout>
-      <Title
-        icon={<Lock />}
-        title='Alterar senha'
-      />
-      <p className='text-zinc-700'>
-        Sua segurança é importante para nós, e é por isso que oferecemos a você a opção de alterar sua senha a qualquer momento. Por favor, confira as dicas de segurança abaixo para criar uma nova senha segura.
-      </p>
-      <h2 className='text-zinc-900 font-semibold mt-2'>
-        Dicas:
-      </h2>
-      <ul className='list-disc flex flex-col gap-1 ml-3 my-2'>
-        {passwordTips.map((tip, index) => (
-          <li
-            key={`${index}-tip`}
-            className='text-zinc-700 text-sm'
-          >
-            {tip}
-          </li>
-        ))}
-      </ul>
-      <form
-        className='flex flex-col gap-4'
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Field
-          type='password'
-          variant='faded'
-          label='Senha atual'
-          name='password'
-          control={control}
-        />
-        <Field
-          type='password'
-          variant='faded'
-          label='Nova senha'
-          name='newPassword'
-          control={control}
-        />
-        <Field
-          type='password'
-          variant='faded'
-          label='Confirme a nova senha'
-          name='confirmNewPassword'
-          control={control}
-        />
-        <SubmitButton title='Alterar' />
-        <ForgotPassword className='mt-0 mx-auto' />
-      </form>
-    </AsideLayout >
+      <Description title={metadata.title as string} />
+      <Form userId={user.id} />
+    </AsideLayout>
   );
 };
 

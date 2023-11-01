@@ -56,7 +56,7 @@ export const newPassword = z
   .min(8, 'A nova senha deve ter no mínimo 8 caracteres!')
   .trim();
 
-export const confirmNewPassword = z
+export const checkPassword = z
   .string()
   .nonempty('A confirmação da nova senha é obrigatória!')
   .min(8, 'A nova senha deve ter no mínimo 8 caracteres!')
