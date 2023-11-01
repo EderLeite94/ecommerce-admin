@@ -1,4 +1,4 @@
-export const useFetch = async <B = unknown, D = unknown>(
+export const useFetch = async <D = unknown, B = unknown>(
   url: string,
   method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE',
   body?: B
@@ -9,7 +9,7 @@ export const useFetch = async <B = unknown, D = unknown>(
     body: JSON.stringify(body)
   });
 
-  const data: D & { message: string } = await response.json();
+  const data: D & { message: string } = !(url.includes('cookies') && method === 'POST') ? await response.json() : response;
 
   return {
     response,
