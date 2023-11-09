@@ -42,6 +42,9 @@
       "@models/*": [
         "models/*"
       ],
+      "@pages/*": [
+        "app/(pages)/*"
+      ],
       "@services/*": [
         "services/*"
       ],

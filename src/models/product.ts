@@ -5,10 +5,6 @@ export interface IProduct {
   category: string;
   totalQuantity: number;
   images: string[];
-  colors: {
-    name: string;
-    quantity: number;
-  }[];
   payment: {
     price: number;
     installments: number;
@@ -19,8 +15,14 @@ export interface IProduct {
     massMeasurements: 'kg' | 'g';
     dimensions: string;
   };
-  sizes: {
+  productOptions: {
+    id: string;
+    color: string;
     size: string;
+    quantity: number;
+    price: number;
+    promotionalPrice?: number;
+    promotionalExpiryDate?: string;
     bust: string;
     waist: string;
     hip: string;

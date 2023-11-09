@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useState } from 'react';
 
@@ -12,7 +14,7 @@ import { useFetch } from '@hooks/index';
 import { showToast } from '@utils/toast';
 import { removeSpecialCharacters } from '@utils/formatters';
 
-export const useAuth = () => {
+const useAuth = () => {
   const base: string = 'auth/admin';
 
   const { push } = useRouter();
@@ -67,3 +69,5 @@ export const useAuth = () => {
     handleUpdatePasswordById
   };
 };
+
+export default useAuth;
