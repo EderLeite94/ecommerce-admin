@@ -8,7 +8,7 @@ interface AsideLayoutProps extends PropsWithChildren {
   className?: string;
 }
 
-export const AsideLayout: FC<AsideLayoutProps> = ({ children, className }) => {
+const AsideLayout: FC<AsideLayoutProps> = ({ children, className }) => {
   return (
     <div className='bg-zinc-50 flex'>
       <AsideNavigation />
@@ -18,3 +18,5 @@ export const AsideLayout: FC<AsideLayoutProps> = ({ children, className }) => {
     </div>
   );
 };
+
+export default AsideLayout;

@@ -1,1 +1,5 @@
-export * from './AsideNavigation';
+import AsideNavigation from './AsideNavigation';
+
+export {
+  AsideNavigation
+};

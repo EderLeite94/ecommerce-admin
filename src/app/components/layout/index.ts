@@ -1,2 +1,7 @@
-export * from './AsideLayout';
-export * from './GridLayout';
+import AsideLayout from './AsideLayout';
+import GridLayout from './GridLayout';
+
+export {
+  AsideLayout,
+  GridLayout
+};

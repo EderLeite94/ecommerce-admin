@@ -13,7 +13,7 @@ interface TextAreaFieldProps extends TextAreaProps {
   control: Control<any, any>;
 }
 
-export const TextareaField: FC<TextAreaFieldProps> = ({
+const TextareaField: FC<TextAreaFieldProps> = ({
   control,
   name,
   variant,
@@ -41,3 +41,5 @@ export const TextareaField: FC<TextAreaFieldProps> = ({
     />
   );
 };
+
+export default TextareaField;

@@ -13,7 +13,7 @@ interface FieldProps extends InputProps {
   control: Control<any, any>;
 }
 
-export const Field: FC<FieldProps> = ({
+const Field: FC<FieldProps> = ({
   control,
   name,
   variant,
@@ -41,3 +41,5 @@ export const Field: FC<FieldProps> = ({
     />
   );
 };
+
+export default Field;

@@ -15,12 +15,10 @@ export const useCoupon = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCreateCoupon = useCallback(async (userId: IUser['id'], couponValues: ICoupon) => {
-    const url = `${baseURL}/${base}/create/${userId}`;
-
     try {
       setIsLoading(true);
 
-      const { response, data } = await useFetch(url, 'POST', couponValues);
+      const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', couponValues);
 
       showToast(data.message, response.ok);
     } finally {
@@ -29,7 +27,7 @@ export const useCoupon = () => {
   }, []);
 
   return {
-    handleCreateCoupon,
-    isLoading
+    isLoading,
+    handleCreateCoupon
   };
 };

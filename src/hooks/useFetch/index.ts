@@ -6,7 +6,8 @@ export const useFetch = async <D = unknown, B = unknown>(
   const response = await fetch(url, {
     method,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
+    cache: 'no-store'
   });
 
   const data: D & { message: string } = !(url.includes('cookies') && method === 'POST') ? await response.json() : response;

@@ -11,7 +11,7 @@ import { cn } from '@utils/cn';
 
 import { accordionItems, linkItems } from './utils';
 
-export const AsideNavigation: FC = () => {
+const AsideNavigation: FC = () => {
   const [isOpenAsideNavigation, setIsOpenAsideNavigation] = useState(true);
 
   return (
@@ -95,3 +95,5 @@ export const AsideNavigation: FC = () => {
     </nav>
   );
 };
+
+export default AsideNavigation;
