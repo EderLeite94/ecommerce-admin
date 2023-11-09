@@ -8,7 +8,7 @@ interface ForgotPasswordProps {
   className?: string;
 }
 
-export const ForgotPassword: FC<ForgotPasswordProps> = ({ className }) => {
+const ForgotPassword: FC<ForgotPasswordProps> = ({ className }) => {
   return (
     <NextLink
       href='/recovery-password'
@@ -17,4 +17,6 @@ export const ForgotPassword: FC<ForgotPasswordProps> = ({ className }) => {
       Esqueci minha senha
     </NextLink>
   );
-}; 
+};
+
+export default ForgotPassword;

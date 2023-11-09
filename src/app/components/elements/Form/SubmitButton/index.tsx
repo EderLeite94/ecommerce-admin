@@ -6,12 +6,12 @@ import { Button, type ButtonProps } from '@nextui-org/react';
 
 import { cn } from '@utils/cn';
 
-interface SubmitButton extends ButtonProps {
+interface SubmitButtonProps extends ButtonProps {
   title: string;
   className?: string;
 }
 
-export const SubmitButton: FC<SubmitButton> = ({ title, className, ...props }) => {
+const SubmitButton: FC<SubmitButtonProps> = ({ title, className, ...props }) => {
   return (
     <Button
       type='submit'
@@ -22,4 +22,6 @@ export const SubmitButton: FC<SubmitButton> = ({ title, className, ...props }) =
       {title}
     </Button>
   );
-}; 
+};
+
+export default SubmitButton;

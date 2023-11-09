@@ -7,10 +7,12 @@ interface GridLayoutProps extends PropsWithChildren {
   className?: string;
 }
 
-export const GridLayout: FC<GridLayoutProps> = ({ children, cols = '2', className }) => {
+const GridLayout: FC<GridLayoutProps> = ({ children, cols = '2', className }) => {
   return (
     <div className={cn('grid gap-4', cols === '2' ? 'grid-cols-2' : 'grid-cols-3', className)}>
       {children}
     </div>
   );
 };
+
+export default GridLayout;

@@ -13,7 +13,7 @@ interface SelectFieldProps extends SelectProps {
   control: Control<any, any>;
 }
 
-export const SelectField: FC<SelectFieldProps> = ({
+const SelectField: FC<SelectFieldProps> = ({
   children,
   control,
   name,
@@ -44,3 +44,5 @@ export const SelectField: FC<SelectFieldProps> = ({
     />
   );
 };
+
+export default SelectField;

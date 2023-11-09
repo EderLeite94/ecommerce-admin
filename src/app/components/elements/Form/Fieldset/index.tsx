@@ -8,7 +8,7 @@ interface FieldsetProps extends PropsWithChildren {
   legendCn?: string;
 }
 
-export const Fieldset: FC<FieldsetProps> = ({ children, legend, fieldsetCn, legendCn }) => {
+const Fieldset: FC<FieldsetProps> = ({ children, legend, fieldsetCn, legendCn }) => {
   return (
     <fieldset className={cn('flex flex-col gap-4', fieldsetCn)}>
       <legend className={cn('text-zinc-900 font-semibold border-l-4 border-l-zinc-900 pl-2 mb-2', legendCn)}>
@@ -18,3 +18,5 @@ export const Fieldset: FC<FieldsetProps> = ({ children, legend, fieldsetCn, lege
     </fieldset>
   );
 };
+
+export default Fieldset;
