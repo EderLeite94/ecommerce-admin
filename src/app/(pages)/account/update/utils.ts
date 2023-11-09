@@ -7,7 +7,7 @@ import * as addressValidators from '@validators/address';
 
 export type TCompany = z.infer<typeof schema>;
 
-export const schema = z
+const schema = z
   .object({
     cnpj,
     corporateReason,
@@ -19,7 +19,7 @@ export const schema = z
     ...addressValidators
   });
 
-export const schemaResolver = zodResolver(schema);
+export const resolver = zodResolver(schema);
 
 export const companyDefaultValues: TCompany = {
   cnpj: '',

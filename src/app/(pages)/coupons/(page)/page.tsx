@@ -6,7 +6,7 @@ import type { ICoupon, IUser, ISearchParams } from '@models/index';
 import { baseURL } from '@constants/api';
 import { userKey } from '@constants/cookies';
 
-import { useFetch } from '@hooks/useFetch';
+import { useFetch } from '@hooks/index';
 
 import { AsideLayout } from '@components/layout';
 

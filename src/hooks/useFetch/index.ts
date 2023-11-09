@@ -1,4 +1,4 @@
-export const useFetch = async <D = unknown, B = unknown>(
+const useFetch = async <D = unknown, B = unknown>(
   url: string,
   method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE',
   body?: B
@@ -17,3 +17,5 @@ export const useFetch = async <D = unknown, B = unknown>(
     data
   };
 };
+
+export default useFetch;

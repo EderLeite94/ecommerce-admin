@@ -1,0 +1,224 @@
+'use client';
+
+import type { FC } from 'react';
+
+import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
+
+import { SelectItem, Button } from '@nextui-org/react';
+
+import { Plus, Minus } from 'react-feather';
+
+import type { IUser } from '@models/user';
+
+import { useProduct } from '@hooks/index';
+
+import { GridLayout } from '@components/layout';
+import { Field, Fieldset, SelectField, SubmitButton, TextareaField } from '@components/elements';
+
+import { colors } from '@mocks/colors';
+
+import { productDefaultValues, resolver, massMeasurements, type TProducts } from './utils';
+
+interface FormProps {
+  userId: IUser['id'];
+}
+
+const Form: FC<FormProps> = ({ userId }) => {
+  const { control, handleSubmit, reset } = useForm<TProducts>({
+    mode: 'onChange',
+    defaultValues: productDefaultValues,
+    resolver
+  });
+
+  const { fields: fieldProductOptions, append: appendSize, remove: removeSize } = useFieldArray({
+    name: 'productOptions',
+    control
+  });
+
+  const { handleCreateProduct, isLoading } = useProduct();
+
+  const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
+    await handleCreateProduct(userId, productsValues);
+    reset();
+  };
+
+  return (
+    <form
+      className='flex flex-col gap-4'
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Fieldset legend='Informações Básicas'>
+        <Field
+          variant='faded'
+          label='Nome'
+          name='name'
+          control={control}
+        />
+        <TextareaField
+          variant='faded'
+          label='Descrição'
+          name='description'
+          control={control}
+        />
+        <Field
+          variant='faded'
+          label='Categoria'
+          name='category'
+          control={control}
+        />
+        <Field
+          type='number'
+          variant='faded'
+          label='Número de parcelas'
+          placeholder='0'
+          name='installments'
+          control={control}
+        />
+      </Fieldset>
+      <Fieldset legend='Peso/Dimensões'>
+        <GridLayout>
+          <Field
+            type='number'
+            variant='faded'
+            label='Peso'
+            placeholder='0'
+            name='additionalInformation.weight'
+            control={control}
+          />
+          <SelectField
+            variant='faded'
+            label='Medidas de massa'
+            name='additionalInformation.massMeasurements'
+            control={control}
+          >
+            {massMeasurements.map((massMeasurement) => (
+              <SelectItem
+                key={massMeasurement}
+                value={massMeasurement}
+                className='text-zinc-900'
+              >
+                {massMeasurement}
+              </SelectItem>
+            ))}
+          </SelectField>
+        </GridLayout>
+        <Field
+          variant='faded'
+          label='Dimensões'
+          name='additionalInformation.dimensions'
+          control={control}
+        />
+      </Fieldset>
+      <Fieldset legend='Informações adicionais'>
+        {fieldProductOptions.map((field, index) => (
+          <div
+            key={field.id}
+            className='flex flex-col gap-4'
+          >
+            <GridLayout cols='3'>
+              <Field
+                type='number'
+                variant='faded'
+                label='Preço'
+                placeholder='0'
+                name={`productOptions.${index}.price`}
+                control={control}
+              />
+              <Field
+                type='number'
+                variant='faded'
+                label='Preço promocional'
+                placeholder='0'
+                name={`productOptions.${index}.promotionalPrice`}
+                control={control}
+              />
+              <Field
+                type='date'
+                variant='faded'
+                label='Data de expiração preço promocional'
+                placeholder='dd/mm/aaaa'
+                name={`productOptions.${index}.promotionalExpiryDate`}
+                control={control}
+              />
+            </GridLayout>
+            <GridLayout cols='3'>
+              <SelectField
+                variant='faded'
+                label='Cor'
+                name={`productOptions.${index}.color`}
+                control={control}
+              >
+                {colors.map(({ name, hex }) => (
+                  <SelectItem
+                    key={name}
+                    value={name}
+                    style={{ color: hex }}
+                  >
+                    {name}
+                  </SelectItem>
+                ))}
+              </SelectField>
+              <Field
+                variant='faded'
+                label='Quantidade'
+                name={`productOptions.${index}.quantity`}
+                placeholder='0'
+                control={control}
+              />
+              <Field
+                variant='faded'
+                label='Tamanho'
+                name={`productOptions.${index}.size`}
+                control={control}
+              />
+            </GridLayout>
+            <GridLayout cols='3'>
+              <Field
+                variant='faded'
+                label='Busto'
+                name={`productOptions.${index}.bust`}
+                control={control}
+              />
+              <Field
+                variant='faded'
+                label='Cintura'
+                name={`productOptions.${index}.waist`}
+                control={control}
+              />
+              <Field
+                variant='faded'
+                label='Quadril'
+                name={`productOptions.${index}.hip`}
+                control={control}
+              />
+            </GridLayout>
+            <Button
+              type='button'
+              color='danger'
+              className='disabled:opacity-50'
+              onClick={() => removeSize(index)}
+              disabled={index === 0}
+            >
+              <Minus className='text-white' />
+            </Button>
+          </div>
+        ))}
+        <Button
+          type='button'
+          color='success'
+          className='mt-2 w-full'
+          onClick={() => appendSize(productDefaultValues.productOptions)}
+        >
+          <Plus className='text-white' />
+        </Button>
+      </Fieldset>
+      <SubmitButton
+        title='Criar'
+        isDisabled={isLoading}
+        isLoading={isLoading}
+      />
+    </form>
+  );
+};
+
+export default Form;

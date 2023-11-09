@@ -1,3 +1,5 @@
+'use client';
+
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useState } from 'react';
 
@@ -9,7 +11,7 @@ import { useFetch } from '@hooks/index';
 
 import { showToast } from '@utils/toast';
 
-export const useCoupon = () => {
+const useCoupon = () => {
   const base: string = 'coupon';
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -31,3 +33,5 @@ export const useCoupon = () => {
     handleCreateCoupon
   };
 };
+
+export default useCoupon;

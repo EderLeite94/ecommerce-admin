@@ -15,13 +15,13 @@ import { Field, Fieldset, SelectField, SubmitButton, Title } from '@components/e
 
 import { formatCNPJ, formatCPF } from '@utils/formatters';
 
-import { companyDefaultValues, schemaResolver, type TCompany } from './utils';
+import { companyDefaultValues, resolver, type TCompany } from './utils';
 
 const AccountUpdate: NextPage = () => {
   const { control, handleSubmit, setValue } = useForm<TCompany>({
     mode: 'onChange',
     defaultValues: companyDefaultValues,
-    resolver: schemaResolver
+    resolver
   });
 
   const onSubmit: SubmitHandler<TCompany> = (companyValues) => {
