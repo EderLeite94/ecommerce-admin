@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { Command, Eye, Lock, Package, Percent, PlusCircle, ShoppingBag, UploadCloud, User } from 'react-feather';
+import { Command, Eye, Bookmark, Lock, Package, Percent, PlusCircle, ShoppingBag, UploadCloud, User } from 'react-feather';
 
 interface AccordionItems {
   title: string;
@@ -44,6 +44,22 @@ export const accordionItems: AccordionItems[] = [
         icon: <PlusCircle className='w-4' />,
         label: 'Criar',
         path: '/coupons/create'
+      }
+    ]
+  },
+  {
+    title: 'Categorias',
+    icon: <Bookmark className='w-5' />,
+    items: [
+      {
+        icon: <Eye className='w-4' />,
+        label: 'Visualizar todos',
+        path: '/categories'
+      },
+      {
+        icon: <PlusCircle className='w-4' />,
+        label: 'Criar',
+        path: '/categories/create'
       }
     ]
   },

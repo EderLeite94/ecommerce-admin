@@ -9,7 +9,7 @@ export const name = z
 
 export const description = z
   .string()
-  .nonempty()
+  .nonempty('A descrição é obrigatória!')
   .max(50, 'A descrição deve ter no máximo 50 caracteres!')
   .trim();
 

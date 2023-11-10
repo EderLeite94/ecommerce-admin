@@ -11,7 +11,7 @@ import { useCoupon } from '@hooks/index';
 import { GridLayout } from '@components/layout';
 import { Field, SubmitButton, TextareaField } from '@components/elements';
 
-import { couponDefaultValues, schema } from './utils';
+import { couponDefaultValues, resolver } from './utils';
 
 interface FormProps {
   userId: IUser['id'];
@@ -21,7 +21,7 @@ export const Form: FC<FormProps> = ({ userId }) => {
   const { control, handleSubmit, reset } = useForm<ICoupon>({
     mode: 'onChange',
     defaultValues: couponDefaultValues,
-    resolver: schema
+    resolver
   });
 
   const { handleCreateCoupon, isLoading } = useCoupon();
