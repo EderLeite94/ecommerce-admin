@@ -9,23 +9,20 @@ import { baseURL } from '@constants/api';
 
 import { useFetch } from '@hooks/index';
 
-import { type TProducts } from '@pages/products/create/components/Form/utils';
+import { type TCategory } from '@pages/categories/create/components/Form/utils';
 
 import { showToast } from '@utils/toast';
 
-const useProduct = () => {
-  const base: string = 'product';
+const useCategory = () => {
+  const base: string = 'category';
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleCreateProduct = useCallback(async (userId: IUser['id'], productValues: TProducts) => {
+  const handleCreateCategory = useCallback(async (userId: IUser['id'], categoryValues: TCategory) => {
     try {
       setIsLoading(true);
 
-      const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', {
-        ...productValues,
-        images: ['']
-      });
+      const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', categoryValues);
 
       showToast(data.message, response.ok);
     } finally {
@@ -35,8 +32,8 @@ const useProduct = () => {
 
   return {
     isLoading,
-    handleCreateProduct
+    handleCreateCategory
   };
 };
 
-export default useProduct;
+export default useCategory;

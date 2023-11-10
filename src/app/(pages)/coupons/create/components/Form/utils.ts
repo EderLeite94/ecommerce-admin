@@ -14,7 +14,7 @@ export const couponDefaultValues: ICoupon = {
   expirationDate: ''
 };
 
-export const schema = zodResolver(
+export const resolver = zodResolver(
   z.object({
     ...couponValidators
   })
