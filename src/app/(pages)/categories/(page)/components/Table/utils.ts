@@ -5,7 +5,7 @@ interface IColumns {
   label: string;
 }
 
-export interface IRows extends ICategory {
+export interface IRows extends Omit<ICategory, 'id'> {
   delete: JSX.Element;
 }
 

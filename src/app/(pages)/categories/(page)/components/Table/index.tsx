@@ -15,19 +15,29 @@ import {
 
 import { Trash2 } from 'react-feather';
 
-import type { ICategory } from '@models/index';
+import type { ICategory, IUser } from '@models/index';
+
+import { useCategory } from '@hooks/index';
 
 import { columns, type IRows } from './utils';
 
 interface TableProps {
+  userId: IUser['id'];
   categories: ICategory[];
 }
 
-const Table: FC<TableProps> = ({ categories }) => {
-  const rows: IRows[] = categories.map((props) => ({
-    delete: <Button color='danger'>
-      <Trash2 className='stroke-white w-4 h-auto' />
-    </Button>,
+const Table: FC<TableProps> = ({ userId, categories }) => {
+  const { handleDeleteCategoryById, isLoading } = useCategory();
+
+  const rows: IRows[] = categories.map(({ id, ...props }) => ({
+    delete:
+      <Button
+        color='danger'
+        onClick={() => handleDeleteCategoryById(userId, id)}
+        isDisabled={isLoading}
+      >
+        <Trash2 className='stroke-white w-4 h-auto' />
+      </Button>,
     ...props
   }));
 
