@@ -1,5 +1,6 @@
 export type * from './address';
 export type * from './admin';
+export type * from './category';
 export type * from './coupon';
 export type * from './pagination';
 export type * from './paymentMethods';

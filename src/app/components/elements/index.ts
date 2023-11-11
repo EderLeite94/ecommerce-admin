@@ -1,3 +1,4 @@
+import Await from './Await';
 import ErrorMessage from './Form/ErrorMessage';
 import Field from './Form/Field';
 import Fieldset from './Form/Fieldset';
@@ -8,6 +9,7 @@ import TextareaField from './Form/TextareaField';
 import Title from './Title';
 
 export {
+  Await,
   ErrorMessage,
   Field,
   Fieldset,

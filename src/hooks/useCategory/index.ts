@@ -3,13 +3,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useState } from 'react';
 
-import type { IUser } from '@models/index';
+import type { ICategory, IUser } from '@models/index';
 
 import { baseURL } from '@constants/api';
 
 import { useFetch } from '@hooks/index';
-
-import { type TCategory } from '@pages/categories/create/components/Form/utils';
 
 import { showToast } from '@utils/toast';
 
@@ -18,7 +16,7 @@ const useCategory = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleCreateCategory = useCallback(async (userId: IUser['id'], categoryValues: TCategory) => {
+  const handleCreateCategory = useCallback(async (userId: IUser['id'], categoryValues: ICategory) => {
     try {
       setIsLoading(true);
 

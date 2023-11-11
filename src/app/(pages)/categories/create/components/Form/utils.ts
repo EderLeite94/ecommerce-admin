@@ -1,12 +1,12 @@
+import type { ICategory } from '@models/index';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { z } from 'zod';
 
 import * as categoryValidators from '@validators/category';
 
-export type TCategory = z.infer<typeof schema>
-
-export const categoryDefaultValues: TCategory = {
+export const categoryDefaultValues: ICategory = {
   name: '',
   description: ''
 };
