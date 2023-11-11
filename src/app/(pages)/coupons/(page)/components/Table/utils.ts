@@ -5,7 +5,7 @@ interface IColumns {
   label: string;
 }
 
-export interface IRows extends ICoupon {
+export interface IRows extends Omit<ICoupon, 'id'> {
   delete: JSX.Element;
 }
 

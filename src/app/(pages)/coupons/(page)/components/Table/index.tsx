@@ -15,33 +15,37 @@ import {
 
 import { Trash2 } from 'react-feather';
 
-import type { ICoupon } from '@models/index';
+import type { ICoupon, IUser } from '@models/index';
+
+import { useCoupon } from '@hooks/index';
 
 import { formatDate } from '@utils/date';
-
-import PagingActions from '../PagingActions';
 
 import { columns, type IRows } from './utils';
 
 interface TableProps {
+  userId: IUser['id'];
   coupons: ICoupon[];
-  page: number;
 }
 
-const Table: FC<TableProps> = ({ coupons, page }) => {
-  const rows: IRows[] = coupons.map(({ expirationDate, ...rest }) => ({
+const Table: FC<TableProps> = ({ userId, coupons }) => {
+  const { handleDeleteCouponById, isLoading } = useCoupon();
+
+  const rows: IRows[] = coupons.map(({ id, expirationDate, ...rest }) => ({
     expirationDate: formatDate(expirationDate),
-    delete: <Button color='danger'>
-      <Trash2 className='stroke-white w-4 h-auto' />
-    </Button>,
+    delete:
+      <Button
+        color='danger'
+        onClick={() => handleDeleteCouponById(userId, id)}
+        isDisabled={isLoading}
+      >
+        <Trash2 className='stroke-white w-4 h-auto' />
+      </Button>,
     ...rest
   }));
 
   return (
-    <TableContainer
-      aria-label='Tabela de cupons'
-      topContent={<PagingActions page={page} />}
-    >
+    <TableContainer aria-label='Tabela de cupons'>
       <TableHeader columns={columns}>
         {({ key, label }) =>
           <TableColumn
@@ -65,7 +69,7 @@ const Table: FC<TableProps> = ({ coupons, page }) => {
           </TableRow>
         }
       </TableBody>
-    </TableContainer >
+    </TableContainer>
   );
 };
 
