@@ -22,12 +22,12 @@ export const metadata: Metadata = {
 };
 
 const Categories = async ({ searchParams }: ISearchParams): Promise<JSX.Element> => {
-  const user: IUser = JSON.parse(cookies().get(userKey)?.value as string);
+  const { id }: IUser = JSON.parse(cookies().get(userKey)?.value as string);
 
   const page = Number(searchParams.page) || 1;
 
   const promise = useFetch<{ body: ICategory[] }>(
-    `${baseURL}/category/get-all/${user.id}?limit=2&page=${page}`,
+    `${baseURL}/category/get-all/${id}?limit=10&page=${page}`,
     'GET'
   );
 
@@ -38,7 +38,7 @@ const Categories = async ({ searchParams }: ISearchParams): Promise<JSX.Element>
         <PagingActions page={page} />
         <Suspense fallback={<TableSkeleton />}>
           <Await promise={promise}>
-            {({ data }) => <Table categories={data.body} />}
+            {({ data }) => <Table userId={id} categories={data.body} />}
           </Await>
         </Suspense>
       </AsideLayout>
