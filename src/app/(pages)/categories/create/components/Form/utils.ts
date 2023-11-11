@@ -6,7 +6,7 @@ import { z } from 'zod';
 
 import * as categoryValidators from '@validators/category';
 
-export const categoryDefaultValues: ICategory = {
+export const categoryDefaultValues: Omit<ICategory, 'id'> = {
   name: '',
   description: ''
 };

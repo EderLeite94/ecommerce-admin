@@ -12,10 +12,10 @@ import { userKey } from '@constants/cookies';
 
 import { useFetch } from '@hooks/index';
 
-import { Await } from '@components/elements';
+import { Await, PagingActions, TableSkeleton } from '@components/elements';
 import { AsideLayout } from '@components/layout';
 
-import { Description, PagingActions, Table, TableSkeleton } from './components';
+import { Description, Table } from './components';
 
 export const metadata: Metadata = {
   title: 'Todas categorias'
@@ -35,7 +35,10 @@ const Categories = async ({ searchParams }: ISearchParams): Promise<JSX.Element>
     <div key={uuid()}>
       <AsideLayout>
         <Description title={metadata.title as string} />
-        <PagingActions page={page} />
+        <PagingActions
+          path='categories'
+          page={page}
+        />
         <Suspense fallback={<TableSkeleton />}>
           <Await promise={promise}>
             {({ data }) => <Table userId={id} categories={data.body} />}

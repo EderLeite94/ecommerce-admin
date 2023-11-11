@@ -6,7 +6,7 @@ import type { ICoupon } from '@models/index';
 
 import * as couponValidators from '@validators/coupon';
 
-export const couponDefaultValues: ICoupon = {
+export const couponDefaultValues: Omit<ICoupon, 'id'> = {
   name: '',
   description: '',
   code: '',
