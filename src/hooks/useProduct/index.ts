@@ -24,7 +24,7 @@ const useProduct = () => {
 
       const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', {
         ...productValues,
-        images: ['']
+        images: ['image.jpg']
       });
 
       showToast(data.message, response.ok);
