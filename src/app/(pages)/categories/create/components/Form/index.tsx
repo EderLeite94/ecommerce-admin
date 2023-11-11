@@ -6,18 +6,18 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useCategory } from '@hooks/index';
 
-import type { IUser } from '@models/index';
+import type { ICategory, IUser } from '@models/index';
 
 import { Field, SubmitButton, TextareaField } from '@components/elements';
 
-import { categoryDefaultValues, resolver, type TCategory } from './utils';
+import { categoryDefaultValues, resolver } from './utils';
 
 interface FormProps {
   userId: IUser['id'];
 }
 
 const Form: FC<FormProps> = ({ userId }) => {
-  const { control, handleSubmit, reset } = useForm<TCategory>({
+  const { control, handleSubmit, reset } = useForm<ICategory>({
     mode: 'onChange',
     defaultValues: categoryDefaultValues,
     resolver
@@ -25,7 +25,7 @@ const Form: FC<FormProps> = ({ userId }) => {
 
   const { handleCreateCategory, isLoading } = useCategory();
 
-  const onSubmit: SubmitHandler<TCategory> = async (categoryValues) => {
+  const onSubmit: SubmitHandler<ICategory> = async (categoryValues) => {
     await handleCreateCategory(userId, categoryValues);
     reset();
   };
