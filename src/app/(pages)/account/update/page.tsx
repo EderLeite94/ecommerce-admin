@@ -1,149 +1,31 @@
-'use client';
-
-import type { NextPage } from 'next';
-
-import { useForm, type SubmitHandler } from 'react-hook-form';
-
-import { SelectItem } from '@nextui-org/react';
+import type { NextPage, Metadata } from 'next';
+import { cookies } from 'next/headers';
 
 import { UploadCloud } from 'react-feather';
 
-import { states } from '@mocks/index';
+import type { IAdmin } from '@models/index';
 
-import { AsideLayout, GridLayout } from '@components/layout';
-import { Field, Fieldset, SelectField, SubmitButton, Title } from '@components/elements';
+import { userKey } from '@constants/cookies';
 
-import { formatCNPJ, formatCPF } from '@utils/formatters';
+import { AsideLayout } from '@components/layout';
+import { Title } from '@components/elements';
 
-import { companyDefaultValues, resolver, type TCompany } from './utils';
+import { Form } from './components';
+
+export const metadata: Metadata = {
+  title: 'Atualizar dados'
+};
 
 const AccountUpdate: NextPage = () => {
-  const { control, handleSubmit, setValue } = useForm<TCompany>({
-    mode: 'onChange',
-    defaultValues: companyDefaultValues,
-    resolver
-  });
-
-  const onSubmit: SubmitHandler<TCompany> = (companyValues) => {
-    console.log(companyValues);
-  };
+  const admin: IAdmin = JSON.parse(cookies().get(userKey)?.value as string);
 
   return (
     <AsideLayout>
       <Title
         icon={<UploadCloud />}
-        title='Atualizar dados'
+        title={metadata.title as string}
       />
-      <form
-        className='flex flex-col gap-4'
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Fieldset legend='Empresa:'>
-          <Field
-            variant='faded'
-            label='CNPJ'
-            name='cnpj'
-            control={control}
-            onChange={({ target: { value } }) => setValue('cnpj', formatCNPJ(value))}
-          />
-          <GridLayout>
-            <Field
-              variant='faded'
-              label='Razão social'
-              name='corporateReason'
-              control={control}
-            />
-            <Field
-              variant='faded'
-              label='Nome fantasia'
-              name='fantasyName'
-              control={control}
-            />
-          </GridLayout>
-          <Field
-            variant='faded'
-            label='E-mail'
-            name='email'
-            control={control}
-          />
-        </Fieldset>
-        <Fieldset legend='Proprietário(a):'>
-          <GridLayout>
-            <Field
-              variant='faded'
-              label='Nome'
-              name='name'
-              control={control}
-            />
-            <Field
-              variant='faded'
-              label='Sobrenome'
-              name='surname'
-              control={control}
-            />
-          </GridLayout>
-          <Field
-            variant='faded'
-            label='CPF'
-            name='cpf'
-            control={control}
-            onChange={({ target: { value } }) => setValue('cpf', formatCPF(value))}
-          />
-        </Fieldset>
-        <Fieldset legend='Localização:'>
-          <Field
-            variant='faded'
-            label='CEP'
-            name='cep'
-            control={control}
-          />
-          <Field
-            variant='faded'
-            label='Endereço'
-            name='street'
-            control={control}
-          />
-          <GridLayout>
-            <Field
-              variant='faded'
-              label='Bairro'
-              name='district'
-              control={control}
-            />
-            <Field
-              variant='faded'
-              label='Número'
-              name='number'
-              control={control}
-            />
-          </GridLayout>
-        </Fieldset>
-        <GridLayout>
-          <Field
-            variant='faded'
-            label='Cidade'
-            name='city'
-            control={control}
-          />
-          <SelectField
-            variant='faded'
-            label='Estado'
-            name='state'
-            control={control}
-          >
-            {states.map((state, index) => (
-              <SelectItem
-                key={`${index}-${state}`}
-                value={state}
-                className='text-zinc-900'
-              >
-                {state}
-              </SelectItem>
-            ))}
-          </SelectField>
-        </GridLayout>
-        <SubmitButton title='Atualizar' />
-      </form>
+      <Form admin={admin} />
     </AsideLayout>
   );
 };

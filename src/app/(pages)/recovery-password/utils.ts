@@ -7,7 +7,7 @@ import type { IAdmin } from '@models/index';
 import { email } from '@validators/admin';
 
 export interface IRecoveryPassword {
-  email: IAdmin['company']['email'];
+  email: IAdmin['owner']['email'];
 }
 
 export const recoveryPasswordDefaultValues: IRecoveryPassword = {

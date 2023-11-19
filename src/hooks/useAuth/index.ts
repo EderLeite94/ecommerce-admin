@@ -11,13 +11,15 @@ import { baseURL } from '@constants/api';
 
 import { useFetch } from '@hooks/index';
 
+import { type TCompany } from '@pages/account/update/components/Form/utils';
+
 import { showToast } from '@utils/toast';
 import { removeSpecialCharacters } from '@utils/formatters';
 
 const useAuth = () => {
   const base: string = 'auth/admin';
 
-  const { push } = useRouter();
+  const { push, refresh } = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -34,7 +36,7 @@ const useAuth = () => {
         security: { password }
       });
 
-      await useFetch(`${location.href}/api/cookies`, 'POST', data.body);
+      await useFetch(`${location.origin}/api/cookies`, 'POST', data.body);
 
       showToast(data.message, response.ok);
 
@@ -63,10 +65,53 @@ const useAuth = () => {
     }
   }, []);
 
+  const handleUpdateAdminById = useCallback(async (userId: IUser['id'], adminUpdateValues: TCompany) => {
+    try {
+      setIsLoading(true);
+
+      const updateValues = {
+        company: {
+          cnpj: removeSpecialCharacters(adminUpdateValues.cnpj),
+          corporateReason: adminUpdateValues.corporateReason,
+          fantasyName: adminUpdateValues.fantasyName
+        },
+        owner: {
+          name: adminUpdateValues.name,
+          surname: adminUpdateValues.surname,
+          cpf: removeSpecialCharacters(adminUpdateValues.cpf),
+          email: adminUpdateValues.email
+        },
+        address: {
+          cep: removeSpecialCharacters(adminUpdateValues.cep),
+          street: adminUpdateValues.street,
+          number: adminUpdateValues.number,
+          district: adminUpdateValues.district,
+          city: adminUpdateValues.city,
+          state: adminUpdateValues.state
+        },
+        security: {
+          clientDatabases: ''
+        }
+      };
+
+      const [{ response, data }] = await Promise.all([
+        useFetch(`${baseURL}/${base}/update-by-id/${userId}`, 'PATCH', updateValues),
+        useFetch(`${location.origin}/api/cookies`, 'POST', { id: userId, ...updateValues })
+      ]);
+
+      refresh();
+
+      showToast(data.message, response.ok);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refresh]);
+
   return {
     isLoading,
     handleSignIn,
-    handleUpdatePasswordById
+    handleUpdatePasswordById,
+    handleUpdateAdminById
   };
 };
 

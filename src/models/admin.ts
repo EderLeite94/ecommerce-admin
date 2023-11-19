@@ -3,7 +3,6 @@ import { IAddress } from '@models/index';
 export interface IAdmin {
   id: string;
   company: {
-    email: string;
     cnpj: string;
     corporateReason: string;
     fantasyName: string;
@@ -11,6 +10,7 @@ export interface IAdmin {
   owner: {
     name: string;
     surname: string;
+    email: string;
     cpf: string;
   };
   address: IAddress;
