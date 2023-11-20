@@ -88,9 +88,6 @@ const useAuth = () => {
           district: adminUpdateValues.district,
           city: adminUpdateValues.city,
           state: adminUpdateValues.state
-        },
-        security: {
-          clientDatabases: ''
         }
       };
 
