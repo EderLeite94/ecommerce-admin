@@ -8,7 +8,8 @@ import * as categoryValidators from '@validators/category';
 
 export const categoryDefaultValues: Omit<ICategory, 'id'> = {
   name: '',
-  description: ''
+  description: '',
+  image: ''
 };
 
 const schema = z.object({
