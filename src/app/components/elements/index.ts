@@ -1,6 +1,7 @@
 import Await from './Await';
 import ErrorMessage from './Form/ErrorMessage';
 import Field from './Form/Field';
+import FieldFile from './Form/FieldFile';
 import Fieldset from './Form/Fieldset';
 import ForgotPassword from './ForgotPassword';
 import PagingActions from './PagingActions';
@@ -14,6 +15,7 @@ export {
   Await,
   ErrorMessage,
   Field,
+  FieldFile,
   Fieldset,
   ForgotPassword,
   PagingActions,

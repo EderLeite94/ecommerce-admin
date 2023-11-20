@@ -20,7 +20,7 @@ const useCategory = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleCreateCategory = useCallback(async (userId: IUser['id'], categoryValues: ICategory) => {
+  const handleCreateCategory = useCallback(async (userId: IUser['id'], categoryValues: Omit<ICategory, 'id'>) => {
     try {
       setIsLoading(true);
 
