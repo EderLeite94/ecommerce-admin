@@ -23,14 +23,27 @@ export const additionalInformation = z
   .object({
     weight: z
       .coerce
-      .number(),
+      .number()
+      .min(1, 'O peso é obrigatório!'),
     massMeasurements: z
       .string()
+      .nonempty('A medida de massa é obrigatória!')
       .trim(),
     dimensions: z
       .string()
+      .nonempty('As dimensões são obrigatórias!')
       .trim()
   });
+
+export const images = z
+  .array(
+    z.object({
+      value: z
+        .string()
+        .nonempty('A foto é obrigatória!')
+        .trim()
+    })
+  );
 
 export const productOptions = z
   .array(
@@ -50,18 +63,24 @@ export const productOptions = z
         }),
       color: z
         .string()
-        .nonempty('A cor é obrigatória!'),
+        .nonempty('A cor é obrigatória!')
+        .trim(),
       quantity: z
         .coerce
         .number()
         .min(1, 'A quantidade é obrigatória!'),
       size: z
-        .string(),
+        .string()
+        .nonempty('O tamanho é obrigatório!')
+        .trim(),
       bust: z
-        .string(),
+        .string()
+        .trim(),
       waist: z
-        .string(),
+        .string()
+        .trim(),
       hip: z
         .string()
+        .trim()
     })
   );

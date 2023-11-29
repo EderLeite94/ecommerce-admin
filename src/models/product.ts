@@ -4,7 +4,9 @@ export interface IProduct {
   description: string;
   category: string;
   totalQuantity: number;
-  images: string[];
+  images: {
+    value: string;
+  }[];
   payment: {
     price: number;
     installments: number;

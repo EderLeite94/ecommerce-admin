@@ -22,10 +22,7 @@ const useProduct = () => {
     try {
       setIsLoading(true);
 
-      const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', {
-        ...productValues,
-        images: ['image.jpg']
-      });
+      const { response, data } = await useFetch(`${baseURL}/${base}/create/${userId}`, 'POST', productValues);
 
       showToast(data.message, response.ok);
     } finally {
