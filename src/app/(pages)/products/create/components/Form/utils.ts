@@ -13,10 +13,6 @@ export const massMeasurements: IProduct['additionalInformation']['massMeasuremen
 export const schema = z
   .object({
     ...productsValidators
-  })
-  .refine((fields) => !!fields.productOptions.length, {
-    path: ['productOptions'],
-    message: 'Informe ao menos um tamanho!'
   });
 
 export const resolver = zodResolver(schema);
@@ -25,12 +21,15 @@ export const productDefaultValues: TProducts = {
   name: '',
   description: '',
   category: '',
-  installments: 0,
+  installments: 1,
   additionalInformation: {
     weight: 0,
     massMeasurements: 'kg',
     dimensions: ''
   },
+  images: [{
+    value: ''
+  }],
   productOptions: [{
     price: 0,
     promotionalPrice: 0,

@@ -36,6 +36,7 @@ const useImageUpload = () => {
             const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
             setImageURL(imageURL);
             resolve(imageURL);
+            return imageURL;
           } catch {
             const defaultErrorMessage = 'Não foi possível fazer o envio da imagem. Tente novamente mais tarde!';
             const errorMessage = error?.message || defaultErrorMessage;

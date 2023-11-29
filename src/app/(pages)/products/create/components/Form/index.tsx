@@ -10,10 +10,10 @@ import { Plus, Minus } from 'react-feather';
 
 import type { IUser } from '@models/user';
 
-import { useProduct } from '@hooks/index';
+import { useProduct, useImageUpload } from '@hooks/index';
 
 import { GridLayout } from '@components/layout';
-import { Field, Fieldset, SelectField, SubmitButton, TextareaField } from '@components/elements';
+import { Field, FieldFile, Fieldset, SelectField, SubmitButton, TextareaField } from '@components/elements';
 
 import { colors } from '@mocks/colors';
 
@@ -24,7 +24,7 @@ interface FormProps {
 }
 
 const Form: FC<FormProps> = ({ userId }) => {
-  const { control, handleSubmit, reset } = useForm<TProducts>({
+  const { control, register, handleSubmit, reset, formState: { errors } } = useForm<TProducts>({
     mode: 'onChange',
     defaultValues: productDefaultValues,
     resolver
@@ -35,10 +35,30 @@ const Form: FC<FormProps> = ({ userId }) => {
     control
   });
 
+  const { fields: fieldImages, append: appendImage, remove: removeImage } = useFieldArray({
+    name: 'images',
+    control
+  });
+
   const { handleCreateProduct, isLoading } = useProduct();
+  const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
-    await handleCreateProduct(userId, productsValues);
+    const imagePromises = productsValues.images.map(({ value }) => {
+      return handleUpload(
+        value[0] as unknown as File,
+        `${userId}/product`,
+        `${productsValues.name}-${new Date().toDateString()}`
+      );
+    });
+
+    const uploadedImages = await Promise.all(imagePromises);
+
+    await handleCreateProduct(userId, {
+      ...productsValues,
+      images: uploadedImages.map((image) => ({ value: image }))
+    });
+
     reset();
   };
 
@@ -206,11 +226,47 @@ const Form: FC<FormProps> = ({ userId }) => {
         <Button
           type='button'
           color='success'
-          className='mt-2 w-full'
+          className='mt-2'
           onClick={() => appendSize(productDefaultValues.productOptions)}
         >
           <Plus className='text-white' />
         </Button>
+      </Fieldset>
+      <Fieldset legend='Imagens'>
+        {fieldImages.map((field, index) => (
+          <div
+            key={field.id}
+            className='flex items-center justify-between'
+          >
+            <FieldFile
+              label='Escolha uma foto:'
+              name={`images.${index}.value`}
+              progress={progress}
+              isLoading={isLoadingImageUpload}
+              error={errors.images?.message}
+              register={register}
+            />
+            <div className='flex items-center gap-4'>
+              <Button
+                type='button'
+                color='danger'
+                className='disabled:opacity-50'
+                onClick={() => removeImage(index)}
+                disabled={index === 0}
+              >
+                <Minus className='text-white' />
+              </Button>
+              <Button
+                type='button'
+                color='success'
+                isDisabled={isLoadingImageUpload}
+                onClick={() => appendImage({ value: '' })}
+              >
+                <Plus className='text-white' />
+              </Button>
+            </div>
+          </div>
+        ))}
       </Fieldset>
       <SubmitButton
         title='Criar'
