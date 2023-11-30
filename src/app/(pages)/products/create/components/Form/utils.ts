@@ -28,7 +28,7 @@ export const productDefaultValues: TProducts = {
     dimensions: ''
   },
   images: [{
-    value: ''
+    url: ''
   }],
   productOptions: [{
     price: 0,

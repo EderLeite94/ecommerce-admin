@@ -44,9 +44,9 @@ const Form: FC<FormProps> = ({ userId }) => {
   const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
-    const imagePromises = productsValues.images.map(({ value }) => {
+    const imagePromises = productsValues.images.map(({ url }) => {
       return handleUpload(
-        value[0] as unknown as File,
+        url[0] as unknown as File,
         `${userId}/product`,
         `${productsValues.name}-${new Date().toDateString()}`
       );
@@ -56,7 +56,7 @@ const Form: FC<FormProps> = ({ userId }) => {
 
     await handleCreateProduct(userId, {
       ...productsValues,
-      images: uploadedImages.map((image) => ({ value: image }))
+      images: uploadedImages.map((image) => ({ url: image }))
     });
 
     reset();
@@ -240,10 +240,10 @@ const Form: FC<FormProps> = ({ userId }) => {
           >
             <FieldFile
               label='Escolha uma foto:'
-              name={`images.${index}.value`}
+              name={`images.${index}.url`}
               progress={progress}
               isLoading={isLoadingImageUpload}
-              error={errors.images?.message}
+              error={errors.images?.[index]?.url?.message as string}
               register={register}
             />
             <div className='flex items-center gap-4'>
@@ -260,7 +260,7 @@ const Form: FC<FormProps> = ({ userId }) => {
                 type='button'
                 color='success'
                 isDisabled={isLoadingImageUpload}
-                onClick={() => appendImage({ value: '' })}
+                onClick={() => appendImage({ url: '' })}
               >
                 <Plus className='text-white' />
               </Button>

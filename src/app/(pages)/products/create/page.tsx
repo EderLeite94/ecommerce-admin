@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 };
 
 const ProductsAdd: NextPage = () => {
-  const user: IUser = JSON.parse(cookies().get(userKey)?.value as string);
+  const { id }: IUser = JSON.parse(cookies().get(userKey)?.value as string);
 
   return (
     <AsideLayout>
       <Description title={metadata.title as string} />
-      <Form userId={user.id} />
+      <Form userId={id} />
     </AsideLayout>
   );
 };

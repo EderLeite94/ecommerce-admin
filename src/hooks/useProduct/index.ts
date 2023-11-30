@@ -3,7 +3,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useCallback, useState } from 'react';
 
-import type { IUser } from '@models/index';
+import { useRouter } from 'next/navigation';
+
+import type { IUser, IProduct } from '@models/index';
 
 import { baseURL } from '@constants/api';
 
@@ -15,6 +17,8 @@ import { showToast } from '@utils/toast';
 
 const useProduct = () => {
   const base: string = 'product';
+
+  const { refresh } = useRouter();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -30,9 +34,24 @@ const useProduct = () => {
     }
   }, []);
 
+  const handleDeletProductById = useCallback(async (userId: IUser['id'], productId: IProduct['id']) => {
+    try {
+      setIsLoading(true);
+
+      const { response, data } = await useFetch(`${baseURL}/${base}/delete-by-id/${userId}/${productId}`, 'DELETE');
+
+      refresh();
+
+      showToast(data.message, response.ok);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refresh]);
+
   return {
     isLoading,
-    handleCreateProduct
+    handleCreateProduct,
+    handleDeletProductById
   };
 };
 

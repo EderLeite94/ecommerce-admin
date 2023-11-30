@@ -5,7 +5,7 @@ export interface IProduct {
   category: string;
   totalQuantity: number;
   images: {
-    value: string;
+    url: string;
   }[];
   payment: {
     price: number;
