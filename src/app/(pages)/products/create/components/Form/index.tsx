@@ -8,7 +8,7 @@ import { SelectItem, Button } from '@nextui-org/react';
 
 import { Plus, Minus } from 'react-feather';
 
-import type { IUser } from '@models/user';
+import type { IUser, ICategory } from '@models/index';
 
 import { useProduct, useImageUpload } from '@hooks/index';
 
@@ -21,9 +21,10 @@ import { productDefaultValues, resolver, massMeasurements, type TProducts } from
 
 interface FormProps {
   userId: IUser['id'];
+  categories: ICategory[];
 }
 
-const Form: FC<FormProps> = ({ userId }) => {
+const Form: FC<FormProps> = ({ userId, categories }) => {
   const { control, register, handleSubmit, reset, formState: { errors } } = useForm<TProducts>({
     mode: 'onChange',
     defaultValues: productDefaultValues,
@@ -80,12 +81,26 @@ const Form: FC<FormProps> = ({ userId }) => {
           name='description'
           control={control}
         />
-        <Field
+        <SelectField
           variant='faded'
-          label='Categoria'
+          label='Categorias'
           name='category'
           control={control}
-        />
+          isDisabled={!categories.length}
+          description={!categories.length && (
+            <span className='text-danger-500'>Nenhuma categoria criada!</span>
+          )}
+        >
+          {categories.map(({ id, name }) => (
+            <SelectItem
+              key={`category-${id}-${name}`}
+              value={name}
+              className='text-zinc-700'
+            >
+              {name}
+            </SelectItem>
+          ))}
+        </SelectField>
         <Field
           type='number'
           variant='faded'
