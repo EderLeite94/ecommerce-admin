@@ -26,17 +26,17 @@ const schema = z
 export const resolver = zodResolver(schema);
 
 export const getCompanyDefaultValues = (admin: IAdmin) => ({
-  cnpj: formatCNPJ(admin.company.cnpj),
-  corporateReason: admin.company.corporateReason,
-  fantasyName: admin.company.fantasyName,
-  email: admin.owner.email,
-  name: admin.owner.name,
-  surname: admin.owner.surname,
-  cpf: formatCPF(admin.owner.cpf),
-  cep: formatCEP(admin.address.cep),
-  street: admin.address.street,
-  district: admin.address.district,
-  number: admin.address.number,
-  city: admin.address.city,
-  state: admin.address.state
+  cnpj: formatCNPJ(admin?.company?.cnpj || ''),
+  corporateReason: admin?.company?.corporateReason || '',
+  fantasyName: admin?.company?.fantasyName || '',
+  email: admin?.owner?.email || '',
+  name: admin?.owner?.name || '',
+  surname: admin?.owner?.surname || '',
+  cpf: formatCPF(admin?.owner?.cpf || ''),
+  cep: formatCEP(admin?.address?.cep || ''),
+  street: admin?.address?.street || '',
+  district: admin?.address?.district || '',
+  number: admin?.address?.number || '',
+  city: admin?.address?.city || '',
+  state: admin?.address?.state || ''
 });

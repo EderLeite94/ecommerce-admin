@@ -19,6 +19,8 @@ export const metadata: Metadata = {
 const AccountUpdate: NextPage = () => {
   const admin: IAdmin = JSON.parse(cookies().get(userKey)?.value as string);
 
+  console.log(admin);
+
   return (
     <AsideLayout>
       <Title
