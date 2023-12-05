@@ -3,13 +3,15 @@
 
 import { useEffect, useState, type FC } from 'react';
 
+import { useSearchParams, usePathname } from 'next/navigation';
+
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
 
 import { SelectItem, Button, Spinner } from '@nextui-org/react';
 
 import { Plus, Minus } from 'react-feather';
 
-import type { IUser, ICategory } from '@models/index';
+import type { ICategory } from '@models/index';
 
 import { baseURL } from '@constants/api';
 
@@ -24,15 +26,16 @@ import { formatDate } from '@utils/date';
 
 import { resolver, massMeasurements, type TProducts } from './utils';
 
-interface FormProps {
-  userId: IUser['id'];
-  productId?: string;
-}
-
-const Form: FC<FormProps> = ({ userId, productId }) => {
+const Form: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState<TProducts & { id: string }>();
   const [categories, setCategories] = useState<ICategory[]>();
+
+  const pathname = usePathname();
+  const { get } = useSearchParams();
+
+  const userId = get('userId') as string;
+  const productId = pathname.split('/')[2];
 
   useEffect(() => {
     const fetchData = async () => {

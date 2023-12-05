@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
-import { cookies, headers } from 'next/headers';
 
-import type { IUser, ISearchParams } from '@models/index';
+import type { ISearchParams } from '@models/index';
 
 import { baseURL } from '@constants/api';
-import { userKey } from '@constants/cookies';
 
 import { useFetch } from '@hooks/index';
 
@@ -33,16 +31,9 @@ export const generateMetadata = async ({ params, searchParams }: Props): Promise
 };
 
 const ProductsId = async () => {
-  const { id }: IUser = JSON.parse(cookies().get(userKey)?.value as string);
-
-  const productId = headers().get('next-url')?.split('/')[2];
-
   return (
     <AsideLayout>
-      <Form
-        userId={id}
-        productId={productId}
-      />
+      <Form />
     </AsideLayout>
   );
 };
