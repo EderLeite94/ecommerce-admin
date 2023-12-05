@@ -7,11 +7,7 @@ export interface IProduct {
   images: {
     url: string;
   }[];
-  payment: {
-    price: number;
-    installments: number;
-    discountPercentage: number;
-  };
+  installments: number;
   additionalInformation: {
     weight: number;
     massMeasurements: 'kg' | 'g';

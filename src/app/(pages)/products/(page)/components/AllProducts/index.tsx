@@ -2,8 +2,6 @@
 
 import type { FC } from 'react';
 
-import NextLink from 'next/link';
-
 import type { IUser, IProduct } from '@models/index';
 
 import { useProduct } from '@hooks/index';
@@ -21,20 +19,16 @@ const AllProducts: FC<AllProductsProps> = ({ userId, products }) => {
   return (
     <section className='flex flex-wrap justify-around gap-2'>
       {products.map(({ id, name, images, category, productOptions }) => (
-        <NextLink
-          href={`/products/${id}?userId=${userId}`}
+        <ProductCard
           key={`product-${id}`}
-        >
-          <ProductCard
-            name={name}
-            imageURL={images[0].url}
-            category={category}
-            price={productOptions[0].price}
-            handleClick={() => handleDeletProductById(userId, id)}
-            isLoading={isLoading}
-          />
-        </NextLink>
-
+          name={name}
+          imageURL={images[0].url}
+          category={category}
+          price={productOptions[0].price}
+          handleClick={() => handleDeletProductById(userId, id)}
+          isLoading={isLoading}
+          href={`/products/${id}?userId=${userId}`}
+        />
       ))}
     </section>
   );

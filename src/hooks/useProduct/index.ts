@@ -34,6 +34,24 @@ const useProduct = () => {
     }
   }, []);
 
+  const handleUpdateProductById = useCallback(async (userId: IUser['id'], productId: IProduct['id'], productValues: TProducts) => {
+    try {
+      setIsLoading(true);
+
+      const { response, data } = await useFetch(
+        `${baseURL}/${base}/update-by-id/${userId}/${productId}`,
+        'PATCH',
+        productValues
+      );
+
+      refresh();
+
+      showToast(data.message, response.ok);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [refresh]);
+
   const handleDeletProductById = useCallback(async (userId: IUser['id'], productId: IProduct['id']) => {
     try {
       setIsLoading(true);
@@ -51,6 +69,7 @@ const useProduct = () => {
   return {
     isLoading,
     handleCreateProduct,
+    handleUpdateProductById,
     handleDeletProductById
   };
 };

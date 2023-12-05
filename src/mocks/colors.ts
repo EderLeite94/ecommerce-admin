@@ -5,6 +5,14 @@ export interface Colors {
 
 export const colors: Colors[] = [
   {
+    name: 'Preto',
+    hex: '#222'
+  },
+  {
+    name: 'Branco',
+    hex: '#222'
+  },
+  {
     name: 'Amarelo',
     hex: '#FFD700'
   },

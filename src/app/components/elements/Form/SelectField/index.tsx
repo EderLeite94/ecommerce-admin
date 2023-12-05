@@ -18,13 +18,14 @@ const SelectField: FC<SelectFieldProps> = ({
   control,
   name,
   variant,
+  defaultValue = '',
   ...props
 }) => {
   return (
     <Controller
       name={name as string}
       control={control}
-      defaultValue=''
+      defaultValue={defaultValue}
       render={
         ({
           field: { ...fields },
@@ -36,6 +37,7 @@ const SelectField: FC<SelectFieldProps> = ({
             variant={variant}
             errorMessage={error && <ErrorMessage errorMessage={error.message as string} />}
             className='text-zinc-900'
+            defaultValue={defaultValue}
           >
             {children}
           </Select>

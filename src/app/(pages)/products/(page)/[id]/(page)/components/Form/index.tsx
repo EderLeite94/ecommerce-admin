@@ -17,17 +17,28 @@ import { Field, FieldFile, Fieldset, SelectField, SubmitButton, TextareaField } 
 
 import { colors } from '@mocks/colors';
 
-import { productDefaultValues, resolver, massMeasurements, type TProducts } from './utils';
+import { formatDate } from '@utils/date';
+
+import { resolver, massMeasurements, type TProducts } from './utils';
 
 interface FormProps {
   userId: IUser['id'];
   categories: ICategory[];
+  products: TProducts & { id: string };
 }
 
-const Form: FC<FormProps> = ({ userId, categories }) => {
-  const { control, register, handleSubmit, reset, formState: { errors } } = useForm<TProducts>({
+const Form: FC<FormProps> = ({ userId, categories, products }) => {
+  const { control, register, handleSubmit, formState: { errors } } = useForm<TProducts>({
     mode: 'onChange',
-    defaultValues: productDefaultValues,
+    defaultValues: {
+      name: products?.name,
+      description: products?.description,
+      category: products?.category,
+      installments: products?.installments,
+      images: products?.images,
+      additionalInformation: products?.additionalInformation,
+      productOptions: products?.productOptions
+    },
     resolver
   });
 
@@ -41,11 +52,12 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
     control
   });
 
-  const { handleCreateProduct, isLoading } = useProduct();
+  const { handleUpdateProductById, isLoading } = useProduct();
   const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
     const imagePromises = productsValues.images.map(({ url }) => {
+      if (typeof url === 'string') return url;
       return handleUpload(
         url[0] as unknown as File,
         `${userId}/product`,
@@ -55,12 +67,10 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
 
     const uploadedImages = await Promise.all(imagePromises);
 
-    await handleCreateProduct(userId, {
+    await handleUpdateProductById(userId, products.id, {
       ...productsValues,
       images: uploadedImages.map((image) => ({ url: image }))
     });
-
-    reset();
   };
 
   return (
@@ -87,9 +97,9 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
           name='category'
           control={control}
           isDisabled={!categories.length}
-          description={!categories.length && (
-            <span className='text-danger-500'>Nenhuma categoria criada!</span>
-          )}
+          description={
+            <span className='text-zinc-500'>Atual: {products?.category}</span>
+          }
         >
           {categories.map(({ name }) => (
             <SelectItem
@@ -125,6 +135,9 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
             label='Medidas de massa'
             name='additionalInformation.massMeasurements'
             control={control}
+            description={
+              <span className='text-zinc-500'>Atual: {products?.additionalInformation.massMeasurements}</span>
+            }
           >
             {massMeasurements.map((massMeasurement) => (
               <SelectItem
@@ -174,6 +187,9 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
                 placeholder='dd/mm/aaaa'
                 name={`productOptions.${index}.promotionalExpiryDate`}
                 control={control}
+                description={
+                  <span className='text-zinc-500'>Atual: {formatDate(products?.productOptions[index].promotionalExpiryDate)}</span>
+                }
               />
             </GridLayout>
             <GridLayout cols='3'>
@@ -182,6 +198,9 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
                 label='Cor'
                 name={`productOptions.${index}.color`}
                 control={control}
+                description={
+                  <span className='text-zinc-500'>Atual: {products?.productOptions[index].color}</span>
+                }
               >
                 {colors.map(({ name, hex }) => (
                   <SelectItem
@@ -242,7 +261,17 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
           type='button'
           color='success'
           className='mt-2'
-          onClick={() => appendSize(productDefaultValues.productOptions)}
+          onClick={() => appendSize({
+            price: 0,
+            promotionalPrice: 0,
+            promotionalExpiryDate: new Date(),
+            color: '',
+            quantity: 0,
+            size: '',
+            bust: '',
+            waist: '',
+            hip: ''
+          })}
         >
           <Plus className='text-white' />
         </Button>
