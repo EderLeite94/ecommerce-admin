@@ -10,19 +10,22 @@ import { Button, Image, Spinner } from '@nextui-org/react';
 import { Trash2, Eye } from 'react-feather';
 
 import { formatCurrencyBRL } from '@utils/formatters/currency';
+import { calculateDiscountPercentage } from '@utils/product/calculator';
+import { cn } from '@utils/cn';
 
 interface ProductCardProps {
   name: string;
   imageURL: string;
   category: string;
   price: number;
+  promotionalPrice: number;
   isLoading: boolean;
   handleClick: () => void;
   href: string;
 }
 
 const ProductCard: FC<ProductCardProps> = ({
-  name, imageURL, category, price, isLoading, handleClick, href
+  name, imageURL, category, price, promotionalPrice, isLoading, handleClick, href
 }) => {
   const { push } = useRouter();
 
@@ -41,16 +44,30 @@ const ProductCard: FC<ProductCardProps> = ({
         className='w-full lg:w-60 h-96'
       />
       <div className='flex flex-col justify-between p-1'>
-        <h3 className='text-yellow-700 text-sm font-medium mt-2'>
+        <h3 className='text-yellow-700 text-sm font-medium mt-2 truncate'>
           {name}
         </h3>
         <span className='text-zinc-700 text-xs font-medium'>
           {category}
         </span>
-        <span className='text-zinc-700 mt-2 mb-1'>
-          {formatCurrencyBRL(price)}
-        </span>
+        <div className='flex items-center gap-2'>
+          {promotionalPrice && (
+            <span className='text-zinc-700 mt-2 mb-1'>
+              {formatCurrencyBRL(promotionalPrice)}
+            </span>
+          )}
+          <span className={
+            cn('text-zinc-700 mt-2 mb-1', promotionalPrice && 'text-xs line-through')
+          }>
+            {formatCurrencyBRL(price)}
+          </span>
+        </div>
       </div>
+      {promotionalPrice && (
+        <div className='bg-white text-zinc-700 rounded p-1 text-sm flex gap-3 absolute top-3 left-0 z-10'>
+          {calculateDiscountPercentage(price, promotionalPrice)}% OFF
+        </div>
+      )}
       <div className='flex gap-3 absolute top-3 right-3 z-10'>
         <Button
           isIconOnly

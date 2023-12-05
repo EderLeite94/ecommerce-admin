@@ -3,11 +3,12 @@
 
 import { useEffect, useState, type FC } from 'react';
 
+import NextImage from 'next/image';
 import { useSearchParams, usePathname } from 'next/navigation';
 
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
 
-import { SelectItem, Button, Spinner } from '@nextui-org/react';
+import { SelectItem, Button, Spinner, Image } from '@nextui-org/react';
 
 import { Plus, Minus } from 'react-feather';
 
@@ -116,6 +117,8 @@ const Form: FC = () => {
       <Spinner size='lg' color='primary' />
     </div>;
   }
+
+  console.log(fieldImages);
 
   return (
     <form
@@ -323,6 +326,23 @@ const Form: FC = () => {
         </Button>
       </Fieldset>
       <Fieldset legend='Imagens'>
+        <span className='text-zinc-700'>Atuais:</span>
+        <div className='flex flex-wrap gap-2'>
+          {fieldImages.map(({ url }, index) => (
+            <Image
+              key={`product-${index}-${url}`}
+              as={NextImage}
+              src={url}
+              alt={products?.name}
+              width='240'
+              height='0'
+              isZoomed
+              isBlurred={isLoading}
+              draggable='false'
+              className='w-full lg:w-32 h-32'
+            />
+          ))}
+        </div>
         {fieldImages.map((field, index) => (
           <div
             key={field.id}

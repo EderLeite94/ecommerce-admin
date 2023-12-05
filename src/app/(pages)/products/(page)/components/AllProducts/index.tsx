@@ -24,6 +24,7 @@ const AllProducts: FC<AllProductsProps> = ({ userId, products }) => {
           name={name}
           imageURL={images[0].url}
           category={category}
+          promotionalPrice={productOptions[0].promotionalPrice as number}
           price={productOptions[0].price}
           handleClick={() => handleDeletProductById(userId, id)}
           isLoading={isLoading}
