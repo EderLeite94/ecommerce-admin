@@ -1,16 +1,19 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
-import type { FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
 
-import { SelectItem, Button } from '@nextui-org/react';
+import { SelectItem, Button, Spinner } from '@nextui-org/react';
 
 import { Plus, Minus } from 'react-feather';
 
 import type { IUser, ICategory } from '@models/index';
 
-import { useProduct, useImageUpload } from '@hooks/index';
+import { baseURL } from '@constants/api';
+
+import { useProduct, useImageUpload, useFetch } from '@hooks/index';
 
 import { GridLayout } from '@components/layout';
 import { Field, FieldFile, Fieldset, SelectField, SubmitButton, TextareaField } from '@components/elements';
@@ -23,36 +26,68 @@ import { resolver, massMeasurements, type TProducts } from './utils';
 
 interface FormProps {
   userId: IUser['id'];
-  categories: ICategory[];
-  products: TProducts & { id: string };
+  productId?: string;
 }
 
-const Form: FC<FormProps> = ({ userId, categories, products }) => {
-  const { control, register, handleSubmit, formState: { errors } } = useForm<TProducts>({
+const Form: FC<FormProps> = ({ userId, productId }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [products, setProducts] = useState<TProducts & { id: string }>();
+  const [categories, setCategories] = useState<ICategory[]>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [product, categories] = await Promise.all([
+          useFetch<{ body: TProducts & { id: string } }>(
+            `${baseURL}/product/get-by-id/${userId}/${productId}`, 'GET'),
+          useFetch<{ body: ICategory[] }>(
+            `${baseURL}/category/get-all/${userId}?limit=100`, 'GET')
+        ]);
+
+        setProducts(product.data.body);
+        setCategories(categories.data.body);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [productId, userId]);
+
+  const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<TProducts>({
     mode: 'onChange',
-    defaultValues: {
-      name: products?.name,
-      description: products?.description,
-      category: products?.category,
-      installments: products?.installments,
-      images: products?.images,
-      additionalInformation: products?.additionalInformation,
-      productOptions: products?.productOptions
-    },
     resolver
   });
+
+  useEffect(() => {
+    if (products) {
+      const fields: (keyof TProducts)[] = [
+        'name',
+        'description',
+        'category',
+        'installments',
+        'images',
+        'additionalInformation',
+        'productOptions',
+      ];
+
+      fields.forEach((field) => setValue(field, products?.[field]));
+    }
+  }, [products, setValue]);
 
   const { fields: fieldProductOptions, append: appendSize, remove: removeSize } = useFieldArray({
     name: 'productOptions',
     control
   });
-
   const { fields: fieldImages, append: appendImage, remove: removeImage } = useFieldArray({
     name: 'images',
     control
   });
 
-  const { handleUpdateProductById, isLoading } = useProduct();
+  const { handleUpdateProductById, isLoading: isLoadingUpdate } = useProduct();
   const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
@@ -67,11 +102,17 @@ const Form: FC<FormProps> = ({ userId, categories, products }) => {
 
     const uploadedImages = await Promise.all(imagePromises);
 
-    await handleUpdateProductById(userId, products.id, {
+    await handleUpdateProductById(userId, String(productId), {
       ...productsValues,
       images: uploadedImages.map((image) => ({ url: image }))
     });
   };
+
+  if (isLoading) {
+    return <div className='flex justify-center'>
+      <Spinner size='lg' color='primary' />
+    </div>;
+  }
 
   return (
     <form
@@ -91,26 +132,28 @@ const Form: FC<FormProps> = ({ userId, categories, products }) => {
           name='description'
           control={control}
         />
-        <SelectField
-          variant='faded'
-          label='Categorias'
-          name='category'
-          control={control}
-          isDisabled={!categories.length}
-          description={
-            <span className='text-zinc-500'>Atual: {products?.category}</span>
-          }
-        >
-          {categories.map(({ name }) => (
-            <SelectItem
-              key={name}
-              value={name}
-              className='text-zinc-700'
-            >
-              {name}
-            </SelectItem>
-          ))}
-        </SelectField>
+        {categories && (
+          <SelectField
+            variant='faded'
+            label='Categorias'
+            name='category'
+            control={control}
+            isDisabled={!categories.length}
+            description={
+              <span className='text-zinc-500'>Atual: {products?.category}</span>
+            }
+          >
+            {categories.map(({ name }) => (
+              <SelectItem
+                key={name}
+                value={name}
+                className='text-zinc-700'
+              >
+                {name}
+              </SelectItem>
+            ))}
+          </SelectField>
+        )}
         <Field
           type='number'
           variant='faded'
@@ -187,8 +230,8 @@ const Form: FC<FormProps> = ({ userId, categories, products }) => {
                 placeholder='dd/mm/aaaa'
                 name={`productOptions.${index}.promotionalExpiryDate`}
                 control={control}
-                description={
-                  <span className='text-zinc-500'>Atual: {formatDate(products?.productOptions[index].promotionalExpiryDate)}</span>
+                description={products?.productOptions?.[index]?.promotionalExpiryDate &&
+                  <span className='text-zinc-500'>Atual: {formatDate(products.productOptions[index].promotionalExpiryDate)}</span>
                 }
               />
             </GridLayout>
@@ -198,7 +241,7 @@ const Form: FC<FormProps> = ({ userId, categories, products }) => {
                 label='Cor'
                 name={`productOptions.${index}.color`}
                 control={control}
-                description={
+                description={products?.productOptions?.[index]?.color &&
                   <span className='text-zinc-500'>Atual: {products?.productOptions[index].color}</span>
                 }
               >
@@ -313,9 +356,9 @@ const Form: FC<FormProps> = ({ userId, categories, products }) => {
         ))}
       </Fieldset>
       <SubmitButton
-        title='Criar'
-        isDisabled={isLoading}
-        isLoading={isLoading}
+        title='Atualizar'
+        isDisabled={isLoadingUpdate}
+        isLoading={isLoadingUpdate}
       />
     </form>
   );

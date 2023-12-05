@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
-import { v4 as uuid } from 'uuid';
-
 import type { IUser, IProduct } from '@models/index';
 
 import { baseURL } from '@constants/api';
@@ -27,12 +25,10 @@ const Products = async () => {
   );
 
   return (
-    <div key={uuid()}>
-      <AsideLayout>
-        <Description title={metadata.title as string} />
-        {data.body.length ? <AllProducts userId={id} products={data.body} /> : <NoProducts />}
-      </AsideLayout>
-    </div>
+    <AsideLayout>
+      <Description title={metadata.title as string} />
+      {data.body.length ? <AllProducts userId={id} products={data.body} /> : <NoProducts />}
+    </AsideLayout>
   );
 };
 

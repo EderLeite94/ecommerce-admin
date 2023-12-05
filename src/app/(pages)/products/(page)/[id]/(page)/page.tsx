@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { cookies, headers } from 'next/headers';
 
-import type { IUser, ISearchParams, ICategory } from '@models/index';
+import type { IUser, ISearchParams } from '@models/index';
 
 import { baseURL } from '@constants/api';
 import { userKey } from '@constants/cookies';
@@ -37,20 +37,11 @@ const ProductsId = async () => {
 
   const productId = headers().get('next-url')?.split('/')[2];
 
-  const { data: product } = await useFetch<{ body: TProducts & { id: string } }>(
-    `${baseURL}/product/get-by-id/${id}/${productId}`, 'GET'
-  );
-
-  const { data: categories } = await useFetch<{ body: ICategory[] }>(
-    `${baseURL}/category/get-all/${id}?limit=100`, 'GET'
-  );
-
   return (
     <AsideLayout>
       <Form
         userId={id}
-        categories={categories.body}
-        products={product.body}
+        productId={productId}
       />
     </AsideLayout>
   );
