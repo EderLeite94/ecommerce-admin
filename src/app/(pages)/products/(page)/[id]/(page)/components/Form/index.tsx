@@ -6,6 +6,8 @@ import { useEffect, useState, type FC } from 'react';
 import NextImage from 'next/image';
 import { useSearchParams, usePathname } from 'next/navigation';
 
+import { v4 } from 'uuid';
+
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
 
 import { SelectItem, Button, Spinner, Image } from '@nextui-org/react';
@@ -95,20 +97,30 @@ const Form: FC = () => {
   const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
-    const imagePromises = productsValues.images.map(({ url }) => {
-      if (typeof url === 'string') return url;
+    const existingImages: string[] = [];
+
+    const imagePromises = productsValues.images.map(({ url }, index) => {
+      if (typeof url === 'string') {
+        existingImages.push(url);
+        return;
+      }
       return handleUpload(
         url[0] as unknown as File,
         `${userId}/product`,
-        `${productsValues.name}-${new Date().toDateString()}`
+        `${productsValues.name}-${v4()}-${index}`
       );
     });
 
     const uploadedImages = await Promise.all(imagePromises);
 
+    const newImages = [
+      ...existingImages,
+      ...uploadedImages.filter((el) => typeof el !== 'undefined')
+    ];
+
     await handleUpdateProductById(userId, String(productId), {
       ...productsValues,
-      images: uploadedImages.map((image) => ({ url: image }))
+      images: newImages.map((url) => ({ url }))
     });
   };
 
@@ -117,8 +129,6 @@ const Form: FC = () => {
       <Spinner size='lg' color='primary' />
     </div>;
   }
-
-  console.log(fieldImages);
 
   return (
     <form

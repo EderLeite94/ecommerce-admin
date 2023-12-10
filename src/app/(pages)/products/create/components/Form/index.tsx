@@ -2,6 +2,8 @@
 
 import type { FC } from 'react';
 
+import { v4 } from 'uuid';
+
 import { useForm, useFieldArray, type SubmitHandler } from 'react-hook-form';
 
 import { SelectItem, Button } from '@nextui-org/react';
@@ -45,11 +47,11 @@ const Form: FC<FormProps> = ({ userId, categories }) => {
   const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<TProducts> = async (productsValues) => {
-    const imagePromises = productsValues.images.map(({ url }) => {
+    const imagePromises = productsValues.images.map(({ url }, index) => {
       return handleUpload(
         url[0] as unknown as File,
         `${userId}/product`,
-        `${productsValues.name}-${new Date().toDateString()}`
+        `${productsValues.name}-${v4()}-${index}`
       );
     });
 
