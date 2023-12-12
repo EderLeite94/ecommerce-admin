@@ -58,13 +58,13 @@ const useProduct = () => {
 
       const { response, data } = await useFetch(`${baseURL}/${base}/delete-by-id/${userId}/${productId}`, 'DELETE');
 
-      refresh();
+      location.reload();
 
       showToast(data.message, response.ok);
     } finally {
       setIsLoading(false);
     }
-  }, [refresh]);
+  }, []);
 
   return {
     isLoading,
