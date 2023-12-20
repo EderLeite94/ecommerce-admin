@@ -8,7 +8,7 @@ import type { IUser } from '@models/user';
 
 import { useAuth } from '@hooks/index';
 
-import { Field, ForgotPassword, SubmitButton } from '@components/elements';
+import { Field, SubmitButton } from '@components/elements';
 
 import { changePasswordDefaultValues, resolver, type TChangePassword } from './utils';
 
@@ -61,7 +61,6 @@ export const Form: FC<FormProps> = ({ userId }) => {
         isDisabled={isLoading}
         isLoading={isLoading}
       />
-      <ForgotPassword className='mt-0 mx-auto' />
     </form>
   );
 }; 
