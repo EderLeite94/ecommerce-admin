@@ -2,6 +2,8 @@
 
 import type { FC } from 'react';
 
+import { v4 } from 'uuid';
+
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 import { useCategory, useImageUpload } from '@hooks/index';
@@ -27,7 +29,11 @@ const Form: FC<FormProps> = ({ userId }) => {
   const { handleUpload, progress, isLoading: isLoadingImageUpload, imageURL } = useImageUpload();
 
   const onSubmit: SubmitHandler<Omit<ICategory, 'id'>> = async (categoryValues) => {
-    await handleUpload(categoryValues.image[0] as unknown as File, `${userId}/category`, categoryValues.name);
+    await handleUpload(
+      categoryValues.image[0] as unknown as File,
+      `${userId}/category`,
+      `${categoryValues.name}-${v4()}`
+    );
 
     await handleCreateCategory(userId, {
       ...categoryValues,
