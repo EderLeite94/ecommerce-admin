@@ -138,7 +138,8 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                     }}
                     isDisabled={
                       trackingNumber.id === product.infoBuyer.id && isLoading ||
-                      trackingNumber.id !== product.infoBuyer.id
+                      trackingNumber.id !== product.infoBuyer.id ||
+                      product.status !== 'Aprovado'
                     }
                   >
                     Enviar
