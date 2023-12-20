@@ -22,7 +22,10 @@ interface OrderListProps {
 const OrderList: FC<OrderListProps> = ({ userId }) => {
   const { handleGetAllOrders, handleCancelPurchase, handleSendTrackingCode, orders, isLoading } = useOrder();
 
-  const [trackingNumber, setTrackingNumber] = useState('');
+  const [trackingNumber, setTrackingNumber] = useState({
+    id: '',
+    trackingCode: ''
+  });
 
   const initialState: {
     page: number,
@@ -102,7 +105,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
         </Select>
       </div>
       <div className='max-w-7xl w-full mx-auto mt-4'>
-        {orders ? (
+        {!isLoading ? (
           <div className='flex flex-col items-center gap-4'>
             {orders?.purchasedProducts.map((product, index) => (
               <div
@@ -114,13 +117,29 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                     variant='faded'
                     label='Código de rastreio'
                     placeholder='Digite o código aqui...'
-                    onChange={(event) => setTrackingNumber(event.target.value)}
+                    onChange={(event) => setTrackingNumber({
+                      trackingCode: event.target.value,
+                      id: product.infoBuyer.id
+                    })}
                     className='text-zinc-700'
+                    description={product.infoBuyer.tracking_code && (
+                      <span className='text-zinc-700'>
+                        <b>Atual:</b> {isLoading ? 'Carregando...' : product.infoBuyer.tracking_code}
+                      </span>
+                    )}
                   />
                   <Button
                     className='bg-blue-500 rounded-md shadow-md text-white text-center text-sm font-semibold w-56 mb-2'
-                    onClick={() => handleSendTrackingCode(trackingNumber, userId, product.infoBuyer.id)}
-                    isDisabled={isLoading}
+                    onClick={async () => {
+                      await Promise.all([
+                        handleSendTrackingCode(trackingNumber.trackingCode, userId, product.infoBuyer.id),
+                        handleGetAllOrders(userId, params)
+                      ]);
+                    }}
+                    isDisabled={
+                      trackingNumber.id === product.infoBuyer.id && isLoading ||
+                      trackingNumber.id !== product.infoBuyer.id
+                    }
                   >
                     Enviar
                   </Button>

@@ -11,6 +11,7 @@ export interface IPurchases {
     'createdAt': string,
     'paymentID': string,
     'id': string,
+    tracking_code: string;
     user: {
       'info': {
         'identification': {

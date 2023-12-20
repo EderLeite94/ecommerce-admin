@@ -76,8 +76,6 @@ const useOrder = () => {
         }
       );
 
-      refresh();
-
       showToast(data.message, response.ok);
     }
     catch (e) {
@@ -85,7 +83,7 @@ const useOrder = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [refresh]);
+  }, []);
 
   return {
     isLoading,
