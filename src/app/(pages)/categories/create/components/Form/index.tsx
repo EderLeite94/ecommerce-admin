@@ -26,10 +26,10 @@ const Form: FC<FormProps> = ({ userId }) => {
   });
 
   const { handleCreateCategory, isLoading: isLoadingCategory } = useCategory();
-  const { handleUpload, progress, isLoading: isLoadingImageUpload, imageURL } = useImageUpload();
+  const { handleUpload, progress, isLoading: isLoadingImageUpload } = useImageUpload();
 
   const onSubmit: SubmitHandler<Omit<ICategory, 'id'>> = async (categoryValues) => {
-    await handleUpload(
+    const image = await handleUpload(
       categoryValues.image[0] as unknown as File,
       `${userId}/category`,
       `${categoryValues.name}-${v4()}`
@@ -37,7 +37,7 @@ const Form: FC<FormProps> = ({ userId }) => {
 
     await handleCreateCategory(userId, {
       ...categoryValues,
-      image: imageURL
+      image
     });
 
     reset();

@@ -27,6 +27,8 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
     trackingCode: ''
   });
 
+  const [showAddressId, setShowAddressId] = useState('');
+
   const initialState: {
     page: number,
     limit: number,
@@ -112,6 +114,39 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                 key={`purchased-products-${index}`}
                 className='bg-zinc-50 flex flex-col rounded-md shadow-md p-4 max-w-3xl w-full'
               >
+                <div className='flex flex-col'>
+                  <Button
+                    className='bg-blue-500 rounded-md shadow-md text-white text-center text-sm font-semibold mb-2'
+                    onClick={() => {
+                      if (product.infoBuyer.id === showAddressId) return setShowAddressId('');
+                      setShowAddressId(product.infoBuyer.id);
+                    }}
+                  >
+                    Ver endereços
+                  </Button>
+                  {showAddressId === product.infoBuyer.id && (
+                    <div className='text-zinc-700 text-xs flex justify-around my-2'>
+                      <div>
+                        <p className='text-zinc-900 font-bold mt-1'>FATURAMENTO:</p>
+                        <p><b>CEP:</b> {product.infoBuyer.user.address.cep}</p>
+                        <p><b>Cidade:</b> {product.infoBuyer.user.address.city}</p>
+                        <p><b>Rua:</b> {product.infoBuyer.user.address.street}</p>
+                        <p><b>Bairro:</b> {product.infoBuyer.user.address.district}</p>
+                        <p><b>Número:</b> {product.infoBuyer.user.address.number}</p>
+                        <p><b>Estado:</b> {product.infoBuyer.user.address.state}</p>
+                      </div>
+                      <div>
+                        <p className='text-zinc-900 font-bold mt-1'>ENTREGA:</p>
+                        <p><b>CEP:</b> {product.infoBuyer.user.deliveryAddress.cep}</p>
+                        <p><b>Cidade:</b> {product.infoBuyer.user.deliveryAddress.city}</p>
+                        <p><b>Rua:</b> {product.infoBuyer.user.deliveryAddress.street}</p>
+                        <p><b>Bairro:</b> {product.infoBuyer.user.deliveryAddress.district}</p>
+                        <p><b>Número:</b> {product.infoBuyer.user.deliveryAddress.number}</p>
+                        <p><b>Estado:</b> {product.infoBuyer.user.deliveryAddress.state}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className='flex items-center gap-4 mb-4'>
                   <Input
                     variant='faded'
@@ -147,7 +182,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                   {product.status === 'Pendente' && (
                     <Button
                       className='bg-danger rounded-md shadow-md text-white text-center text-sm font-semibold w-56 mb-2'
-                      onClick={() => handleCancelPurchase(userId, product.infoBuyer.id)}
+                      onClick={() => handleCancelPurchase(userId, product.infoBuyer.id, product.infoBuyer)}
                       isDisabled={isLoading}
                     >
                       Cancelar compra

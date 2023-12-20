@@ -44,13 +44,14 @@ const useOrder = () => {
     }
   }, []);
 
-  const handleCancelPurchase = useCallback(async (userId: string, purchaseId: string) => {
+  const handleCancelPurchase = useCallback(async (userId: string, purchaseId: string, infoBuyer: IPurchases['infoBuyer']) => {
     try {
       setIsLoading(true);
 
       const { response, data } = await useFetch(
         `${baseURL}/cancel-purchased/${userId}/${purchaseId}`,
         'POST',
+        infoBuyer
       );
 
       refresh();
