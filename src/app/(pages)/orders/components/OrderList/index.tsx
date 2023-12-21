@@ -35,7 +35,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
     sortByDate: 'asc' | 'desc',
     status?: string
   } = {
-    limit: 5,
+    limit: 10,
     page: 1,
     sortByDate: 'desc',
     status: ''
@@ -227,7 +227,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                   {product.infoBuyer.purchasedProducts.map((productList) => (
                     <div key={`purchased-products-${productList.id}`}>
                       <p className='text-yellow-700 text-sm font-semibold mb-2'>
-                        {productList.name} ({productList.quantity}x) - {formatCurrencyBRL(productList.price)}
+                        {productList.name} ({productList.quantity}x) | {formatCurrencyBRL(productList.price)} | {productList.size} ({productList.color})
                       </p>
                       <div className='flex flex-wrap-reverse items-center gap-4'>
                         <NextImage
