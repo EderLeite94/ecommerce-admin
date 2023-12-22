@@ -91,21 +91,21 @@ const AllProducts: FC<AllProductsProps> = ({ userId }) => {
 
   return (
     <>
+      <div className='my-4'>
+        <Input
+          variant='faded'
+          size='sm'
+          label='Pesquisa'
+          placeholder='Procure algum produto...'
+          onChange={(e) => handleDebouncedInputChange(e.target.value)}
+          className='text-zinc-700'
+        />
+      </div>
       <div className='flex justify-center'>
         {(isLoadingProducts && !products?.body.length) && <Spinner size='lg' />}
       </div>
       {Number(products?.totalProduct) > 0 && (
         <>
-          <div className='my-4'>
-            <Input
-              variant='faded'
-              size='sm'
-              label='Pesquisa'
-              placeholder='Procure algum produto...'
-              onChange={(e) => handleDebouncedInputChange(e.target.value)}
-              className='text-zinc-700'
-            />
-          </div>
           <section className='flex flex-wrap justify-around gap-2'>
             {products?.body.map(({ id, name, images, category, productOptions }) => (
               <ProductCard

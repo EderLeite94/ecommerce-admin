@@ -8,7 +8,7 @@ import * as productsValidators from '@validators/products';
 
 export type TProducts = z.infer<typeof schema>
 
-export const massMeasurements: IProduct['additionalInformation']['massMeasurements'][] = ['kg', 'g'];
+export const massMeasurements: IProduct['additionalInformation']['massMeasurements'][] = ['g'];
 
 export const schema = z
   .object({
@@ -24,7 +24,7 @@ export const productDefaultValues: TProducts = {
   installments: 1,
   additionalInformation: {
     weight: 0,
-    massMeasurements: 'kg',
+    massMeasurements: '',
     dimensions: ''
   },
   images: [{
