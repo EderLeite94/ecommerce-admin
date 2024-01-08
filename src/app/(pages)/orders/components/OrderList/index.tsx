@@ -137,6 +137,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                       </div>
                       <div>
                         <p className='text-zinc-900 font-bold mt-1'>ENTREGA:</p>
+                        <p><b>Nome:</b> {product.infoBuyer.user.info.name} {product.infoBuyer.user.info.surname}</p>
                         <p><b>CEP:</b> {product.infoBuyer.user.deliveryAddress.cep}</p>
                         <p><b>Cidade:</b> {product.infoBuyer.user.deliveryAddress.city}</p>
                         <p><b>Rua:</b> {product.infoBuyer.user.deliveryAddress.street}</p>
