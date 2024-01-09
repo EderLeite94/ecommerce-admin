@@ -128,22 +128,22 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                     <div className='text-zinc-700 text-xs flex justify-around my-2'>
                       <div>
                         <p className='text-zinc-900 font-bold mt-1'>FATURAMENTO:</p>
-                        <p><b>CEP:</b> {product.infoBuyer.user.address.cep}</p>
-                        <p><b>Cidade:</b> {product.infoBuyer.user.address.city}</p>
                         <p><b>Rua:</b> {product.infoBuyer.user.address.street}</p>
-                        <p><b>Bairro:</b> {product.infoBuyer.user.address.district}</p>
                         <p><b>Número:</b> {product.infoBuyer.user.address.number}</p>
+                        <p><b>Bairro:</b> {product.infoBuyer.user.address.district}</p>
+                        <p><b>Cidade:</b> {product.infoBuyer.user.address.city}</p>
                         <p><b>Estado:</b> {product.infoBuyer.user.address.state}</p>
+                        <p><b>CEP:</b> {product.infoBuyer.user.address.cep}</p>
                       </div>
                       <div>
                         <p className='text-zinc-900 font-bold mt-1'>ENTREGA:</p>
                         <p><b>Nome:</b> {product.infoBuyer.user.info.name} {product.infoBuyer.user.info.surname}</p>
-                        <p><b>CEP:</b> {product.infoBuyer.user.deliveryAddress.cep}</p>
-                        <p><b>Cidade:</b> {product.infoBuyer.user.deliveryAddress.city}</p>
                         <p><b>Rua:</b> {product.infoBuyer.user.deliveryAddress.street}</p>
-                        <p><b>Bairro:</b> {product.infoBuyer.user.deliveryAddress.district}</p>
                         <p><b>Número:</b> {product.infoBuyer.user.deliveryAddress.number}</p>
+                        <p><b>Bairro:</b> {product.infoBuyer.user.deliveryAddress.district}</p>
+                        <p><b>Cidade:</b> {product.infoBuyer.user.deliveryAddress.city}</p>
                         <p><b>Estado:</b> {product.infoBuyer.user.deliveryAddress.state}</p>
+                        <p><b>CEP:</b> {product.infoBuyer.user.deliveryAddress.cep}</p>
                       </div>
                     </div>
                   )}
