@@ -128,6 +128,8 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                     <div className='text-zinc-700 text-xs flex justify-around my-2'>
                       <div>
                         <p className='text-zinc-900 font-bold mt-1'>FATURAMENTO:</p>
+                        <p><b>Nome:</b> {product.infoBuyer.user.info.name} {product.infoBuyer.user.info.surname}</p>
+                        <p><b>Contato:</b> {product.infoBuyer.user.info.phoneNumber}</p>
                         <p><b>Rua:</b> {product.infoBuyer.user.address.street}</p>
                         <p><b>Número:</b> {product.infoBuyer.user.address.number}</p>
                         <p><b>Bairro:</b> {product.infoBuyer.user.address.district}</p>
@@ -138,6 +140,7 @@ const OrderList: FC<OrderListProps> = ({ userId }) => {
                       <div>
                         <p className='text-zinc-900 font-bold mt-1'>ENTREGA:</p>
                         <p><b>Nome:</b> {product.infoBuyer.user.info.name} {product.infoBuyer.user.info.surname}</p>
+                        <p><b>Contato:</b> {product.infoBuyer.user.info.phoneNumber}</p>
                         <p><b>Rua:</b> {product.infoBuyer.user.deliveryAddress.street}</p>
                         <p><b>Número:</b> {product.infoBuyer.user.deliveryAddress.number}</p>
                         <p><b>Bairro:</b> {product.infoBuyer.user.deliveryAddress.district}</p>
