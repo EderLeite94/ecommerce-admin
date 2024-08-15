@@ -7,6 +7,7 @@ export interface IUser {
   photo: string;
   cpf: string;
   email: string;
+  phoneNumber:string;
   address: IAddress;
   password: string;
   createdAt: string;

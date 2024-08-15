@@ -22,7 +22,8 @@ export interface IPurchases {
         'name': string,
         'surname': string,
         'photo': string,
-        'email': string
+        'email': string,
+        'phoneNumber':string
       },
       address: IAddress,
       deliveryAddress: IAddress,
